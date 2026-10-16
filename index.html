@@ -1,1 +1,675 @@
+```html
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>个人资料与 Flappy Bird</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{--theme:#e9e9e9;--hover:#ddd;--background:#fff}
+    body{margin:0;background:var(--background);font-family:Arial,"Microsoft YaHei",sans-serif;color:#151515}
+    button,input,select{font:inherit}
+    [hidden]{display:none!important}
 
+    .login{
+      min-height:100vh;display:grid;place-items:center;padding:24px;background:#f5f5f5
+    }
+    .login form{width:min(420px,100%);text-align:center}
+    .login input{
+      width:100%;height:58px;border:1px solid transparent;border-radius:7px;
+      background:#e9e9e9;text-align:center;outline:none
+    }
+    .login input:focus{border-color:#777}
+    .login button,.save{
+      margin-top:12px;padding:10px 24px;border:0;border-radius:7px;
+      background:#555;color:white;cursor:pointer
+    }
+    .error{min-height:22px;color:#a12626}
+
+    .profile{min-height:100vh;padding:0 clamp(14px,3vw,44px) 50px}
+    header{
+      position:sticky;top:0;z-index:5;height:72px;display:flex;
+      align-items:center;justify-content:space-between;
+      background:var(--background);border-bottom:1px solid #ddd
+    }
+    h1{font-size:24px;font-weight:500}
+    .actions{display:flex;gap:5px}
+    .icon{
+      width:40px;height:40px;border:0;border-radius:50%;
+      background:transparent;font-size:27px;cursor:pointer
+    }
+    .icon:hover{background:#ddd}
+    .list{display:grid;gap:10px;padding-top:18px}
+    .row{
+      min-height:58px;display:grid;grid-template-columns:minmax(100px,22%) 1fr auto;
+      align-items:center;gap:14px;padding:10px 18px;border:0;border-radius:7px;
+      background:var(--theme)
+    }
+    .row:hover{background:var(--hover)}
+    .row input,.row select{
+      width:100%;padding:8px;border:0;border-radius:5px;background:transparent;
+      text-align:right;outline:none
+    }
+    .row input:focus,.row select:focus{background:white}
+    .arrow{font-size:22px;color:#666}
+
+    .overlay{
+      position:fixed;inset:0;z-index:20;display:grid;place-items:center;
+      padding:20px;background:#0006
+    }
+    .dialog{
+      width:min(460px,100%);max-height:85vh;overflow:auto;padding:24px;
+      border-radius:12px;background:var(--background);box-shadow:0 18px 60px #0004
+    }
+    .dialog-head{display:flex;align-items:center;justify-content:space-between}
+    .settings{display:grid;gap:10px}
+    .settings label{display:grid;gap:7px}
+    .settings select,.settings input{
+      width:100%;padding:13px;border:1px solid #ccc;border-radius:7px;background:#eee
+    }
+
+    .game-view{
+      position:fixed;inset:0;z-index:100;display:grid;place-items:center;
+      overflow:hidden;background:#dff7ff
+    }
+    .game-shell{
+      position:relative;width:min(100vw,520px);height:min(100vh,760px);
+      overflow:hidden;background:#7bd9f6;touch-action:manipulation;user-select:none
+    }
+    canvas{display:block;width:100%;height:100%}
+    .score{
+      position:absolute;top:25px;left:50%;transform:translateX(-50%);
+      color:white;font-size:55px;font-weight:900;text-shadow:0 3px #244a55
+    }
+    .game-close{
+      position:absolute;top:18px;right:18px;width:42px;height:42px;
+      border:2px solid #315b63;border-radius:50%;background:#ffffffe8;
+      color:#315b63;font-size:30px;cursor:pointer
+    }
+    .message{
+      position:absolute;top:43%;left:50%;transform:translate(-50%,-50%);
+      width:min(84%,360px);padding:22px;border:3px solid #315b63;
+      border-radius:18px;background:#fffadc;text-align:center
+    }
+    .message h2{margin:0;color:#e56b3f;font-size:40px}
+    .key{padding:3px 10px;border:2px solid #72959b;border-radius:7px;background:white}
+
+    @media(max-width:560px){
+      .profile{padding-inline:12px}
+      .row{grid-template-columns:90px 1fr auto;padding-inline:12px}
+    }
+  </style>
+</head>
+<body>
+  <section class="login" id="login">
+    <form id="loginForm">
+      <input id="loginInput" type="password" placeholder="密码" required>
+      <button type="submit">打开</button>
+      <p class="error" id="loginError"></p>
+    </form>
+  </section>
+
+  <main class="profile" id="profile" hidden>
+    <header>
+      <h1 id="title">个人资料</h1>
+      <div class="actions">
+        <button class="icon" id="settingsButton" aria-label="设置">⚙</button>
+        <button class="icon" id="closeProfile" aria-label="关闭">×</button>
+      </div>
+    </header>
+
+    <section class="list">
+      <label class="row"><span>昵称</span><input data-save="nickname" value="林晓雨"><span class="arrow">›</span></label>
+      <label class="row"><span>性别</span><select data-save="gender"><option>女</option><option>男</option><option>非二元</option><option>不愿透露</option></select><span class="arrow">›</span></label>
+      <label class="row"><span>生日</span><input data-save="birthday" type="date" value="1998-06-18"><span class="arrow">›</span></label>
+      <label class="row"><span>所在地</span><input data-save="location" value="上海"><span class="arrow">›</span></label>
+      <label class="row"><span>个人简介</span><input data-save="bio" value="记录生活中的小美好"><span class="arrow">›</span></label>
+      <label class="row"><span>感情状态</span><select data-save="relationship"><option>未填写</option><option>单身</option><option>恋爱中</option><option>已婚</option></select><span class="arrow">›</span></label>
+      <label class="row"><span>职业</span><input data-save="occupation" placeholder="请输入职业"><span class="arrow">›</span></label>
+      <label class="row"><span>教育程度</span><select data-save="education"><option>高中</option><option>专科</option><option selected>本科</option><option>硕士</option><option>博士</option></select><span class="arrow">›</span></label>
+      <label class="row"><span>学校</span><input data-save="school" placeholder="请输入学校名称"><span class="arrow">›</span></label>
+      <label class="row"><span>兴趣爱好</span><input data-save="interests" value="摄影"><span class="arrow">›</span></label>
+      <label class="row"><span>常用语言</span><select id="language" data-save="language"><option value="zh">中文</option><option value="en">English</option></select><span class="arrow">›</span></label>
+      <label class="row"><span>家乡</span><input data-save="hometown" value="苏州"><span class="arrow">›</span></label>
+      <label class="row"><span>星座</span><input data-save="zodiac" value="双子座"><span class="arrow">›</span></label>
+    </section>
+  </main>
+
+  <div class="overlay" id="settings" hidden>
+    <section class="dialog">
+      <div class="dialog-head">
+        <h2>设置</h2>
+        <button class="icon" id="closeSettings">×</button>
+      </div>
+
+      <div class="settings">
+        <label>
+          主题颜色
+          <select id="theme">
+            <option value="#f5dcdc|#eccaca">红色</option>
+            <option value="#f6e3cf|#eed3b5">橙色</option>
+            <option value="#f5efc9|#ece2ac">黄色</option>
+            <option value="#dcefe3|#cbe4d4">绿色</option>
+            <option value="#d8f0ef|#c4e5e3">青色</option>
+            <option value="#dce9f8|#cbdcf1">蓝色</option>
+            <option value="#e7def4|#d9cceb">紫色</option>
+            <option value="#f3dee8|#eacbd9">粉色</option>
+            <option value="#e9e9e9|#dfdfdf" selected>灰色</option>
+          </select>
+        </label>
+
+        <label>
+          背景颜色
+          <select id="background">
+            <option value="#ffffff">白色</option>
+            <option value="#fff1f1">红色</option>
+            <option value="#fff3e7">橙色</option>
+            <option value="#fffbe0">黄色</option>
+            <option value="#effaf2">绿色</option>
+            <option value="#eafafa">青色</option>
+            <option value="#eef5ff">蓝色</option>
+            <option value="#f6f0ff">紫色</option>
+            <option value="#fff0f6">粉色</option>
+            <option value="#f1f1f1">灰色</option>
+          </select>
+        </label>
+
+        <label>原密码<input id="oldPassword" type="password"></label>
+        <label>新密码<input id="newPassword" type="password"></label>
+        <label>再次输入新密码<input id="confirmPassword" type="password"></label>
+        <button class="save" id="changePassword">保存密码</button>
+        <p class="error" id="passwordMessage"></p>
+
+        <label>
+          资料可见范围
+          <select data-save="visibility">
+            <option>所有人</option>
+            <option>仅好友</option>
+            <option>仅自己</option>
+          </select>
+        </label>
+      </div>
+    </section>
+  </div>
+
+  <section class="game-view" id="gameView" hidden>
+    <main class="game-shell" id="gameShell">
+      <canvas id="game"></canvas>
+      <div class="score" id="score">0</div>
+      <button class="game-close" id="closeGame">×</button>
+      <section class="message" id="message">
+        <h2 id="messageTitle">Flappy Bird</h2>
+        <p id="messageText">Guide the bird through the pipes.</p>
+        <p><span class="key">SPACE</span> or tap to flap</p>
+        <strong id="result"></strong>
+      </section>
+    </main>
+  </section>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    let password = localStorage.getItem("profilePassword") || "1234";
+
+    function save() {
+      const data = {};
+      document.querySelectorAll("[data-save]").forEach(element => {
+        data[element.dataset.save] = element.value;
+      });
+      data.theme = $("theme").value;
+      data.background = $("background").value;
+      localStorage.setItem("profileData", JSON.stringify(data));
+    }
+
+    function restore() {
+      let data = {};
+      try {
+        data = JSON.parse(localStorage.getItem("profileData")) || {};
+      } catch {}
+
+      document.querySelectorAll("[data-save]").forEach(element => {
+        if (data[element.dataset.save] !== undefined) {
+          element.value = data[element.dataset.save];
+        }
+      });
+
+      if (data.theme) $("theme").value = data.theme;
+      if (data.background) $("background").value = data.background;
+      applyColors();
+    }
+
+    function applyColors() {
+      const [normal, hover] = $("theme").value.split("|");
+      document.documentElement.style.setProperty("--theme", normal);
+      document.documentElement.style.setProperty("--hover", hover);
+      document.documentElement.style.setProperty("--background", $("background").value);
+    }
+
+    document.querySelectorAll("[data-save]").forEach(element => {
+      element.addEventListener("change", save);
+      element.addEventListener("input", save);
+    });
+
+    $("theme").addEventListener("change", () => {
+      applyColors();
+      save();
+    });
+
+    $("background").addEventListener("change", () => {
+      applyColors();
+      save();
+    });
+
+    $("loginForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const entered = $("loginInput").value;
+
+      if (entered.trim().toLowerCase() === "flappybird") {
+        $("login").hidden = true;
+        openGame();
+      } else if (entered === password) {
+        $("loginError").textContent = "";
+        $("loginInput").value = "";
+        $("login").hidden = true;
+        $("profile").hidden = false;
+      } else {
+        $("loginError").textContent = "密码错误，请重试";
+        $("loginInput").select();
+      }
+    });
+
+    $("closeProfile").addEventListener("click", () => {
+      save();
+      $("profile").hidden = true;
+      $("login").hidden = false;
+      document.body.style.background = "#f5f5f5";
+      $("loginInput").focus();
+    });
+
+    $("settingsButton").addEventListener("click", () => {
+      $("settings").hidden = false;
+    });
+
+    $("closeSettings").addEventListener("click", () => {
+      $("settings").hidden = true;
+    });
+
+    $("settings").addEventListener("click", event => {
+      if (event.target === $("settings")) $("settings").hidden = true;
+    });
+
+    $("changePassword").addEventListener("click", () => {
+      const oldValue = $("oldPassword").value;
+      const newValue = $("newPassword").value;
+      const confirmValue = $("confirmPassword").value;
+
+      if (oldValue !== password) {
+        $("passwordMessage").textContent = "原密码不正确";
+      } else if (!newValue) {
+        $("passwordMessage").textContent = "新密码不能为空";
+      } else if (newValue !== confirmValue) {
+        $("passwordMessage").textContent = "两次输入的新密码不一致";
+      } else {
+        password = newValue;
+        localStorage.setItem("profilePassword", password);
+        $("passwordMessage").textContent = "密码已修改";
+        $("oldPassword").value = "";
+        $("newPassword").value = "";
+        $("confirmPassword").value = "";
+      }
+    });
+
+    const translations = {
+      zh: {
+        title: "个人资料",
+        labels: ["昵称","性别","生日","所在地","个人简介","感情状态","职业","教育程度","学校","兴趣爱好","常用语言","家乡","星座"]
+      },
+      en: {
+        title: "Profile",
+        labels: ["Nickname","Gender","Birthday","Location","Bio","Relationship","Occupation","Education","School","Interests","Language","Hometown","Zodiac"]
+      }
+    };
+
+    $("language").addEventListener("change", () => {
+      const text = translations[$("language").value];
+      $("title").textContent = text.title;
+      document.querySelectorAll(".list .row > span:first-child").forEach((label, index) => {
+        label.textContent = text.labels[index];
+      });
+      save();
+    });
+
+    restore();
+
+    const canvas = $("game");
+    const shell = $("gameShell");
+    const ctx = canvas.getContext("2d");
+
+    let width = 520;
+    let height = 760;
+    let state = "ready";
+    let gameScore = 0;
+    let best = Number(localStorage.getItem("flappyBest") || 0);
+    let lastTime = 0;
+    let pipeTimer = 0;
+    let runTime = 0;
+    let groundOffset = 0;
+
+    const pipes = [];
+    const bird = {
+      x: 130,
+      y: 330,
+      radius: 19,
+      velocity: 0,
+      rotation: 0,
+      wing: 0
+    };
+
+    function resizeGame() {
+      const rect = shell.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      const ratio = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.round(rect.width * ratio);
+      canvas.height = Math.round(rect.height * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      width = rect.width;
+      height = rect.height;
+      bird.x = width * 0.25;
+
+      if (state === "ready") bird.y = height * 0.44;
+    }
+
+    function resetGame() {
+      pipes.length = 0;
+      gameScore = 0;
+      pipeTimer = 0;
+      runTime = 0;
+      groundOffset = 0;
+      bird.x = width * 0.25;
+      bird.y = height * 0.44;
+      bird.velocity = 0;
+      bird.rotation = 0;
+      $("score").textContent = "0";
+      $("result").textContent = "";
+    }
+
+    function openGame() {
+      $("gameView").hidden = false;
+      state = "ready";
+      $("messageTitle").textContent = "Flappy Bird";
+      $("messageText").textContent = "Guide the bird through the pipes.";
+      $("message").hidden = false;
+      resizeGame();
+      resetGame();
+    }
+
+    function closeGame() {
+      state = "ready";
+      $("gameView").hidden = true;
+      $("login").hidden = false;
+      $("loginInput").value = "";
+      $("loginInput").focus();
+    }
+
+    function flap() {
+      if (state === "over") {
+        resetGame();
+        state = "running";
+        $("message").hidden = true;
+      } else if (state === "ready") {
+        state = "running";
+        $("message").hidden = true;
+      }
+
+      bird.velocity = -430;
+      bird.wing = 1;
+    }
+
+    function addPipe() {
+      const gap = Math.max(145, Math.min(190, height * 0.25));
+      const groundTop = height - 82;
+      const margin = 88;
+      const gapY = margin + Math.random() * (groundTop - gap - margin * 2);
+
+      pipes.push({
+        x: width + 20,
+        width: Math.max(67, width * 0.14),
+        gapY,
+        gap,
+        scored: false
+      });
+    }
+
+    function gameOver() {
+      if (state !== "running") return;
+
+      state = "over";
+      best = Math.max(best, gameScore);
+      localStorage.setItem("flappyBest", best);
+      $("messageTitle").textContent = "Game Over";
+      $("messageText").textContent = "Press Space or tap to try again.";
+      $("result").textContent = `Score: ${gameScore} · Best: ${best}`;
+      $("message").hidden = false;
+    }
+
+    function update(dt) {
+      bird.wing = Math.max(0, bird.wing - dt * 5);
+
+      if (state === "ready") {
+        bird.y = height * 0.44 + Math.sin(performance.now() / 260) * 8;
+        bird.rotation = 0;
+        return;
+      }
+
+      if (state !== "running") return;
+
+      bird.velocity += 1380 * dt;
+      bird.y += bird.velocity * dt;
+      bird.rotation = Math.max(-0.45, Math.min(1.25, bird.velocity / 600));
+
+      groundOffset = (groundOffset + 125 * dt) % 38;
+      pipeTimer += dt;
+      runTime += dt;
+
+      const frequency = Math.max(0.55, 1.55 - runTime * 0.008 - gameScore * 0.012);
+      const speed = Math.min(350, 185 + runTime * 3 + gameScore * 5);
+
+      if (pipeTimer > frequency) {
+        pipeTimer = 0;
+        addPipe();
+      }
+
+      for (let index = pipes.length - 1; index >= 0; index--) {
+        const pipe = pipes[index];
+        pipe.x -= speed * dt;
+
+        if (!pipe.scored && pipe.x + pipe.width < bird.x) {
+          pipe.scored = true;
+          gameScore++;
+          $("score").textContent = gameScore;
+        }
+
+        const overlaps =
+          bird.x + bird.radius > pipe.x &&
+          bird.x - bird.radius < pipe.x + pipe.width;
+
+        const hits =
+          bird.y - bird.radius < pipe.gapY ||
+          bird.y + bird.radius > pipe.gapY + pipe.gap;
+
+        if (overlaps && hits) gameOver();
+        if (pipe.x + pipe.width < -20) pipes.splice(index, 1);
+      }
+
+      if (
+        bird.y - bird.radius < 0 ||
+        bird.y + bird.radius > height - 82
+      ) {
+        gameOver();
+      }
+    }
+
+    function roundedRect(x, y, w, h, radius, color) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, radius);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+
+    function drawCloud(x, y, size) {
+      ctx.fillStyle = "rgba(255,255,255,.7)";
+      ctx.beginPath();
+      ctx.arc(x, y, size * 0.34, 0, Math.PI * 2);
+      ctx.arc(x + size * 0.36, y - size * 0.16, size * 0.42, 0, Math.PI * 2);
+      ctx.arc(x + size * 0.78, y, size * 0.3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawBird() {
+      ctx.save();
+      ctx.translate(bird.x, bird.y);
+      ctx.rotate(bird.rotation);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#713f28";
+
+      ctx.fillStyle = "#ffd84d";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 24, 19, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#ff9f43";
+      ctx.beginPath();
+      ctx.moveTo(19, -3);
+      ctx.lineTo(36, 3);
+      ctx.lineTo(19, 9);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(10, -9, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#20272a";
+      ctx.beginPath();
+      ctx.arc(13, -9, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.save();
+      ctx.rotate(-0.35 - bird.wing * 0.8);
+      ctx.fillStyle = "#f3a936";
+      ctx.beginPath();
+      ctx.ellipse(-10, 5, 14, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+      ctx.restore();
+    }
+
+    function drawPipe(pipe) {
+      const groundTop = height - 82;
+      const gradient = ctx.createLinearGradient(pipe.x, 0, pipe.x + pipe.width, 0);
+
+      gradient.addColorStop(0, "#60b83f");
+      gradient.addColorStop(0.5, "#9be75e");
+      gradient.addColorStop(1, "#3f9133");
+
+      ctx.fillStyle = gradient;
+      ctx.strokeStyle = "#286d2d";
+      ctx.lineWidth = 3;
+
+      ctx.fillRect(pipe.x, 0, pipe.width, pipe.gapY - 22);
+      ctx.strokeRect(pipe.x, -2, pipe.width, pipe.gapY - 20);
+
+      roundedRect(pipe.x - 7, pipe.gapY - 28, pipe.width + 14, 28, 4, gradient);
+      ctx.strokeRect(pipe.x - 7, pipe.gapY - 28, pipe.width + 14, 28);
+
+      const lowerY = pipe.gapY + pipe.gap;
+
+      roundedRect(pipe.x - 7, lowerY, pipe.width + 14, 28, 4, gradient);
+      ctx.strokeRect(pipe.x - 7, lowerY, pipe.width + 14, 28);
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(pipe.x, lowerY + 28, pipe.width, groundTop - lowerY - 28);
+      ctx.strokeRect(pipe.x, lowerY + 27, pipe.width, groundTop - lowerY - 25);
+    }
+
+    function draw() {
+      const sky = ctx.createLinearGradient(0, 0, 0, height);
+      sky.addColorStop(0, "#72d3f3");
+      sky.addColorStop(1, "#c8f3fb");
+
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, width, height);
+
+      drawCloud(width * 0.08, height * 0.2, 70);
+      drawCloud(width * 0.68, height * 0.31, 88);
+
+      ctx.fillStyle = "#9ad66c";
+      ctx.beginPath();
+      ctx.moveTo(0, height - 105);
+
+      for (let x = 0; x <= width + 50; x += 50) {
+        ctx.quadraticCurveTo(x + 25, height - 145, x + 50, height - 105);
+      }
+
+      ctx.lineTo(width, height);
+      ctx.lineTo(0, height);
+      ctx.fill();
+
+      pipes.forEach(drawPipe);
+
+      ctx.fillStyle = "#d9b864";
+      ctx.fillRect(0, height - 82, width, 82);
+
+      ctx.fillStyle = "#83c950";
+      ctx.fillRect(0, height - 82, width, 17);
+
+      ctx.fillStyle = "#e9d58e";
+      for (let x = -groundOffset; x < width; x += 38) {
+        ctx.fillRect(x, height - 57, 21, 7);
+      }
+
+      drawBird();
+    }
+
+    function loop(time) {
+      const dt = Math.min((time - lastTime) / 1000 || 0, 0.034);
+      lastTime = time;
+
+      if (!$("gameView").hidden) {
+        update(dt);
+        draw();
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    function gameInput(event) {
+      if ($("gameView").hidden || event.target === $("closeGame")) return;
+
+      if (event.type === "keydown") {
+        if (event.code !== "Space" || event.repeat) return;
+        event.preventDefault();
+      }
+
+      flap();
+    }
+
+    window.addEventListener("keydown", gameInput);
+    shell.addEventListener("pointerdown", gameInput);
+    $("closeGame").addEventListener("click", closeGame);
+    window.addEventListener("resize", resizeGame);
+    window.addEventListener("pagehide", save);
+
+    requestAnimationFrame(loop);
+    $("loginInput").focus();
+  </script>
+</body>
+</html>
+```
