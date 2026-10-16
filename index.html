@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffffff">
   <title>个人资料</title>
-
   <style>
     * { box-sizing: border-box; }
-
     :root {
       --row-color: #e9e9e9;
       --row-hover: #dfdfdf;
@@ -19,13 +17,7 @@
       color: #151515;
       background: var(--page-color);
     }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      background: var(--page-color);
-    }
-
+    body { margin: 0; min-width: 320px; background: var(--page-color); }
     button, input { font: inherit; }
     button { color: inherit; }
 
@@ -35,7 +27,6 @@
       padding: 0 clamp(14px, 3vw, 44px) 52px;
       background: var(--page-color);
     }
-
     .header {
       position: sticky;
       top: 0;
@@ -48,19 +39,8 @@
       border-bottom: 1px solid #ededed;
       backdrop-filter: blur(8px);
     }
-
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 500;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
+    h1 { margin: 0; font-size: 24px; font-weight: 500; }
+    .header-actions { display: flex; align-items: center; gap: 4px; }
     .close {
       width: 38px;
       height: 38px;
@@ -72,28 +52,11 @@
       line-height: 34px;
       cursor: pointer;
     }
+    .close:hover, .close:focus-visible { background: #ededed; outline: none; }
+    .settings-button { position: relative; top: -2px; font-size: 25px; line-height: 38px; }
 
-    .close:hover,
-    .close:focus-visible {
-      background: #ededed;
-      outline: none;
-    }
-
-    .settings-button {
-      position: relative;
-      top: -2px;
-      font-size: 25px;
-      line-height: 38px;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-      padding-top: 18px;
-    }
-
+    .list { display: grid; gap: 10px; padding-top: 18px; }
     .row.settings-only { display: none; }
-
     .row {
       min-height: 58px;
       display: grid;
@@ -106,38 +69,13 @@
       background: var(--row-color);
       text-align: left;
     }
-
-    button.row {
-      width: 100%;
-      cursor: pointer;
-    }
-
+    button.row { width: 100%; cursor: pointer; }
     button.row:hover { background: var(--row-hover); }
-
-    button.row:focus-visible {
-      outline: 2px solid #333;
-      outline-offset: 2px;
-    }
-
-    .label {
-      font-size: 15px;
-      color: #222;
-    }
-
-    .value {
-      min-width: 0;
-      color: #111;
-      text-align: right;
-      overflow-wrap: anywhere;
-    }
-
+    button.row:focus-visible { outline: 2px solid #333; outline-offset: 2px; }
+    .label { font-size: 15px; color: #222; }
+    .value { min-width: 0; color: #111; text-align: right; overflow-wrap: anywhere; }
     .muted { color: #707070; }
-
-    .arrow {
-      color: #666;
-      font-size: 22px;
-    }
-
+    .arrow { color: #666; font-size: 22px; }
     .text-input {
       width: 100%;
       min-width: 0;
@@ -149,15 +87,8 @@
       color: #111;
       outline: none;
     }
-
-    .text-input:hover {
-      background: rgba(255, 255, 255, .45);
-    }
-
-    .text-input:focus {
-      border-color: #7d7d7d;
-      background: #fff;
-    }
+    .text-input:hover { background: rgba(255,255,255,.45); }
+    .text-input:focus { border-color: #7d7d7d; background: #fff; }
 
     .overlay {
       position: fixed;
@@ -168,9 +99,7 @@
       padding: 20px;
       background: rgba(0, 0, 0, .34);
     }
-
     .overlay[hidden] { display: none; }
-
     .dialog {
       width: min(460px, 100%);
       max-height: min(650px, 84vh);
@@ -178,35 +107,12 @@
       padding: 24px;
       border-radius: 12px;
       background: var(--page-color);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, .23);
+      box-shadow: 0 18px 60px rgba(0,0,0,.23);
     }
-
-    .dialog-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .dialog h2 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 500;
-    }
-
-    .dialog-close {
-      border: 0;
-      background: transparent;
-      color: #666;
-      font-size: 25px;
-      cursor: pointer;
-    }
-
-    .choices {
-      display: grid;
-      gap: 9px;
-    }
-
+    .dialog-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .dialog h2 { margin: 0; font-size: 20px; font-weight: 500; }
+    .dialog-close { border: 0; background: transparent; color: #666; font-size: 25px; cursor: pointer; }
+    .choices { display: grid; gap: 9px; }
     .choice {
       width: 100%;
       padding: 13px 15px;
@@ -216,25 +122,9 @@
       text-align: left;
       cursor: pointer;
     }
-
-    .choice:hover,
-    .choice:focus-visible {
-      border-color: #555;
-      background: #e8e8e8;
-      outline: none;
-    }
-
-    .choice[aria-checked="true"] {
-      border-color: #222;
-      background: #dedede;
-      font-weight: 600;
-    }
-
-    .settings-list {
-      display: grid;
-      gap: 10px;
-    }
-
+    .choice:hover, .choice:focus-visible { border-color: #555; background: #e8e8e8; outline: none; }
+    .choice[aria-checked="true"] { border-color: #222; background: #dedede; font-weight: 600; }
+    .settings-list { display: grid; gap: 10px; }
     .settings-item {
       width: 100%;
       display: grid;
@@ -248,19 +138,13 @@
       text-align: left;
       cursor: pointer;
     }
-
-    .settings-item:hover,
-    .settings-item:focus-visible {
-      background: var(--row-hover);
-      outline: 2px solid #333;
-    }
-
+    .settings-item:hover, .settings-item:focus-visible { background: var(--row-hover); outline: 2px solid #333; }
     .color-dot {
       display: inline-block;
       width: 18px;
       height: 18px;
       margin-right: 11px;
-      border: 1px solid rgba(0, 0, 0, .18);
+      border: 1px solid rgba(0,0,0,.18);
       border-radius: 4px;
       vertical-align: -4px;
     }
@@ -272,9 +156,7 @@
       color: #666;
       background: #f5f5f5;
     }
-
     .closed[hidden] { display: none; }
-
     .lock-screen {
       min-height: 100vh;
       display: grid;
@@ -282,14 +164,8 @@
       padding: 24px;
       background: #f5f5f5;
     }
-
     .lock-screen[hidden] { display: none; }
-
-    .password-form {
-      width: min(420px, 100%);
-      text-align: center;
-    }
-
+    .password-form { width: min(420px, 100%); text-align: center; }
     .password-input {
       width: 100%;
       height: 58px;
@@ -302,17 +178,8 @@
       text-align: center;
       outline: none;
     }
-
-    .password-input:focus {
-      border-color: #777;
-      background: #e2e2e2;
-    }
-
-    .password-input::placeholder {
-      color: #333;
-      opacity: 1;
-    }
-
+    .password-input:focus { border-color: #777; background: #e2e2e2; }
+    .password-input::placeholder { color: #333; opacity: 1; }
     .unlock-button {
       margin-top: 12px;
       padding: 10px 24px;
@@ -322,284 +189,198 @@
       color: #fff;
       cursor: pointer;
     }
+    .password-error { min-height: 22px; margin: 10px 0 0; color: #a12626; font-size: 14px; }
+    .change-password-form { display: grid; gap: 10px; }
+    .change-password-form .password-input { height: 50px; }
+    .change-password-message { min-height: 21px; margin: 0; color: #a12626; font-size: 14px; text-align: center; }
+    .change-password-message.success { color: #23713c; }
 
-    .password-error {
-      min-height: 22px;
-      margin: 10px 0 0;
-      color: #a12626;
-      font-size: 14px;
-    }
-
-    .change-password-form {
+    .flappy-view {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
       display: grid;
-      gap: 10px;
+      place-items: center;
+      overflow: hidden;
+      background: #dff7ff;
+      color: #18333c;
+      font-family: ui-rounded, "Arial Rounded MT Bold", Arial, sans-serif;
     }
-
-    .change-password-form .password-input {
-      height: 50px;
+    .flappy-view[hidden] { display: none; }
+    .flappy-shell {
+      position: relative;
+      width: min(100vw, 520px);
+      height: min(100vh, 760px);
+      overflow: hidden;
+      background: #7bd9f6;
+      box-shadow: 0 18px 50px rgba(28, 99, 122, .2);
+      touch-action: manipulation;
+      user-select: none;
     }
-
-    .change-password-message {
-      min-height: 21px;
-      margin: 0;
-      color: #a12626;
-      font-size: 14px;
+    #flappyCanvas { display: block; width: 100%; height: 100%; }
+    .flappy-hud { position: absolute; inset: 0; pointer-events: none; }
+    .flappy-score {
+      position: absolute;
+      top: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: clamp(38px, 10vw, 58px);
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 3px 0 #244a55, 2px 0 0 #244a55, -2px 0 0 #244a55;
+    }
+    .flappy-message {
+      position: absolute;
+      top: 43%;
+      left: 50%;
+      width: min(84%, 360px);
+      transform: translate(-50%, -50%);
+      padding: 22px 24px;
+      border: 3px solid #315b63;
+      border-radius: 18px;
+      background: rgba(255, 250, 220, .94);
       text-align: center;
+      box-shadow: 0 7px 0 rgba(49, 91, 99, .24);
     }
-
-    .change-password-message.success {
-      color: #23713c;
+    .flappy-message[hidden] { display: none; }
+    .flappy-message h2 { margin: 0 0 9px; color: #e56b3f; font-size: clamp(30px, 8vw, 44px); }
+    .flappy-message p { margin: 6px 0; font-size: 16px; line-height: 1.45; }
+    .flappy-message .flappy-result { margin: 12px 0 2px; font-size: 20px; font-weight: 800; }
+    .flappy-key {
+      display: inline-block;
+      padding: 3px 10px;
+      border: 2px solid #72959b;
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: 0 3px 0 #aac1c5;
+      font-size: 14px;
+      font-weight: 800;
     }
+    .flappy-exit {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border: 2px solid #315b63;
+      border-radius: 50%;
+      background: rgba(255,255,255,.88);
+      color: #315b63;
+      font: 400 31px/36px Arial, sans-serif;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    .flappy-exit:hover, .flappy-exit:focus-visible { background: #fff; outline: 3px solid rgba(255,255,255,.75); }
 
     @media (max-width: 560px) {
       .page { padding-inline: 12px; }
       .header { height: 62px; }
       h1 { font-size: 21px; }
-
-      .row {
-        grid-template-columns: 84px 1fr auto;
-        gap: 8px;
-        padding-inline: 13px;
-      }
-
-      .label,
-      .value,
-      .text-input {
-        font-size: 14px;
-      }
+      .row { grid-template-columns: 84px 1fr auto; gap: 8px; padding-inline: 13px; }
+      .label, .value, .text-input { font-size: 14px; }
     }
-
     @media (prefers-reduced-motion: no-preference) {
       .dialog { animation: appear .18s ease-out; }
-
-      @keyframes appear {
-        from {
-          transform: translateY(8px);
-          opacity: 0;
-        }
-      }
+      @keyframes appear { from { transform: translateY(8px); opacity: 0; } }
     }
   </style>
 </head>
-
 <body>
+  <section class="flappy-view" id="flappyView" hidden>
+    <main class="flappy-shell" id="flappyShell" aria-label="Flappy Bird game. Press Space or tap to make the bird fly upward.">
+      <canvas id="flappyCanvas" tabindex="0"></canvas>
+      <div class="flappy-hud">
+        <div class="flappy-score" id="flappyScore">0</div>
+        <button class="flappy-exit" id="flappyExit" type="button" aria-label="Return to login">×</button>
+        <section class="flappy-message" id="flappyMessage">
+          <h2 id="flappyMessageTitle">Flappy Bird</h2>
+          <p id="flappyMessageText">Guide the little bird through the pipes.</p>
+          <p><span class="flappy-key">SPACE</span> or tap to flap</p>
+          <p class="flappy-result" id="flappyResult"></p>
+        </section>
+      </div>
+    </main>
+  </section>
+
   <section class="lock-screen" id="lockScreen">
     <form class="password-form" id="passwordForm">
-      <input
-        class="password-input"
-        id="passwordInput"
-        type="password"
-        placeholder="密码"
-        aria-label="密码"
-        autocomplete="current-password"
-        required
-      >
+      <input class="password-input" id="passwordInput" type="password" placeholder="密码" aria-label="密码" autocomplete="current-password" required>
       <button class="unlock-button" type="submit">打开</button>
-      <p
-        class="password-error"
-        id="passwordError"
-        role="alert"
-        aria-live="polite"
-      ></p>
+      <p class="password-error" id="passwordError" role="alert" aria-live="polite"></p>
     </form>
   </section>
 
   <main class="page" id="profilePage" hidden>
     <header class="header">
       <h1 id="pageTitle">个人资料</h1>
-
       <div class="header-actions">
-        <button
-          class="close settings-button"
-          id="settingsOpen"
-          type="button"
-          aria-label="设置"
-        >⚙</button>
-
-        <button
-          class="close"
-          id="pageClose"
-          type="button"
-          aria-label="关闭个人资料"
-        >×</button>
+        <button class="close settings-button" id="settingsOpen" type="button" aria-label="设置">⚙</button>
+        <button class="close" id="pageClose" type="button" aria-label="关闭个人资料">×</button>
       </div>
     </header>
 
     <section class="list" id="profileList" aria-label="个人资料字段">
       <label class="row" data-field="nickname">
         <span class="label">昵称</span>
-        <input
-          class="text-input"
-          type="text"
-          value="林晓雨"
-          aria-label="昵称"
-        >
+        <input class="text-input" type="text" value="林晓雨" aria-label="昵称">
         <span class="arrow">›</span>
       </label>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="gender"
-        data-selected="0"
-      >
-        <span class="label">性别</span>
-        <span class="value">女</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="gender" data-selected="0">
+        <span class="label">性别</span><span class="value">女</span><span class="arrow">›</span>
       </button>
-
       <label class="row" data-field="birthday">
         <span class="label">生日</span>
-        <input
-          class="text-input"
-          type="date"
-          value="1998-06-18"
-          aria-label="生日"
-        >
+        <input class="text-input" type="date" value="1998-06-18" aria-label="生日">
         <span class="arrow">›</span>
       </label>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="location"
-        data-selected="1"
-      >
-        <span class="label">所在地</span>
-        <span class="value">上海</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="location" data-selected="1">
+        <span class="label">所在地</span><span class="value">上海</span><span class="arrow">›</span>
       </button>
-
       <label class="row" data-field="bio">
         <span class="label">个人简介</span>
-        <input
-          class="text-input"
-          type="text"
-          value="记录生活中的小美好"
-          aria-label="个人简介"
-        >
+        <input class="text-input" type="text" value="记录生活中的小美好" aria-label="个人简介">
         <span class="arrow">›</span>
       </label>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="relationship"
-        data-selected="-1"
-      >
-        <span class="label">感情状态</span>
-        <span class="value muted">未填写</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="relationship" data-selected="-1">
+        <span class="label">感情状态</span><span class="value muted">未填写</span><span class="arrow">›</span>
       </button>
-
       <label class="row" data-field="occupation">
         <span class="label">职业</span>
-        <input
-          class="text-input"
-          type="text"
-          placeholder="请输入职业"
-          aria-label="职业"
-        >
+        <input class="text-input" type="text" placeholder="请输入职业" aria-label="职业">
         <span class="arrow">›</span>
       </label>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="education"
-        data-selected="2"
-      >
-        <span class="label">教育程度</span>
-        <span class="value">本科</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="education" data-selected="2">
+        <span class="label">教育程度</span><span class="value">本科</span><span class="arrow">›</span>
       </button>
-
       <label class="row" data-field="school">
         <span class="label">学校</span>
-        <input
-          class="text-input"
-          type="text"
-          placeholder="请输入学校名称"
-          aria-label="学校"
-        >
+        <input class="text-input" type="text" placeholder="请输入学校名称" aria-label="学校">
         <span class="arrow">›</span>
       </label>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="interests"
-        data-selected="1"
-      >
-        <span class="label">兴趣爱好</span>
-        <span class="value">摄影</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="interests" data-selected="1">
+        <span class="label">兴趣爱好</span><span class="value">摄影</span><span class="arrow">›</span>
       </button>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="language"
-        data-selected="0"
-      >
-        <span class="label">常用语言</span>
-        <span class="value">中文</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="language" data-selected="0">
+        <span class="label">常用语言</span><span class="value">中文</span><span class="arrow">›</span>
       </button>
-
       <label class="row" data-field="hometown">
         <span class="label">家乡</span>
-        <input
-          class="text-input"
-          type="text"
-          value="苏州"
-          aria-label="家乡"
-        >
+        <input class="text-input" type="text" value="苏州" aria-label="家乡">
         <span class="arrow">›</span>
       </label>
-
-      <button
-        class="row select-row"
-        type="button"
-        data-field="zodiac"
-        data-selected="2"
-      >
-        <span class="label">星座</span>
-        <span class="value">双子座</span>
-        <span class="arrow">›</span>
+      <button class="row select-row" type="button" data-field="zodiac" data-selected="2">
+        <span class="label">星座</span><span class="value">双子座</span><span class="arrow">›</span>
       </button>
-
-      <button
-        class="row select-row settings-only"
-        type="button"
-        data-field="theme"
-        data-selected="9"
-      >
-        <span class="label">主题颜色</span>
-        <span class="value">灰色</span>
-        <span class="arrow">›</span>
+      <button class="row select-row settings-only" type="button" data-field="theme" data-selected="9">
+        <span class="label">主题颜色</span><span class="value">灰色</span><span class="arrow">›</span>
       </button>
-
-      <button
-        class="row select-row settings-only"
-        type="button"
-        data-field="visibility"
-        data-selected="0"
-      >
-        <span class="label">资料可见范围</span>
-        <span class="value">所有人</span>
-        <span class="arrow">›</span>
+      <button class="row select-row settings-only" type="button" data-field="visibility" data-selected="0">
+        <span class="label">资料可见范围</span><span class="value">所有人</span><span class="arrow">›</span>
       </button>
-
-      <button
-        class="row select-row settings-only"
-        type="button"
-        data-field="background"
-        data-selected="0"
-      >
-        <span class="label">背景颜色</span>
-        <span class="value">白色</span>
-        <span class="arrow">›</span>
+      <button class="row select-row settings-only" type="button" data-field="background" data-selected="0">
+        <span class="label">背景颜色</span><span class="value">白色</span><span class="arrow">›</span>
       </button>
     </section>
   </main>
@@ -609,144 +390,50 @@
   </section>
 
   <div class="overlay" id="overlay" hidden>
-    <div
-      class="dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="dialogTitle"
-    >
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
       <div class="dialog-head">
         <h2 id="dialogTitle">请选择</h2>
-        <button
-          class="dialog-close"
-          id="dialogClose"
-          type="button"
-          aria-label="关闭选项"
-        >×</button>
+        <button class="dialog-close" id="dialogClose" type="button" aria-label="关闭选项">×</button>
       </div>
-
       <div class="choices" id="choices" role="radiogroup"></div>
     </div>
   </div>
 
   <div class="overlay" id="settingsOverlay" hidden>
-    <div
-      class="dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="settingsTitle"
-    >
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
       <div class="dialog-head">
         <h2 id="settingsTitle">设置</h2>
-        <button
-          class="dialog-close"
-          id="settingsClose"
-          type="button"
-          aria-label="关闭设置"
-        >×</button>
+        <button class="dialog-close" id="settingsClose" type="button" aria-label="关闭设置">×</button>
       </div>
-
       <div class="settings-list">
-        <button
-          class="settings-item"
-          type="button"
-          data-open-field="theme"
-        >
-          <span id="settingsThemeLabel">主题颜色</span>
-          <span class="arrow">›</span>
+        <button class="settings-item" type="button" data-open-field="theme">
+          <span id="settingsThemeLabel">主题颜色</span><span class="arrow">›</span>
         </button>
-
-        <button
-          class="settings-item"
-          type="button"
-          data-open-field="background"
-        >
-          <span id="settingsBackgroundLabel">背景颜色</span>
-          <span class="arrow">›</span>
+        <button class="settings-item" type="button" data-open-field="background">
+          <span id="settingsBackgroundLabel">背景颜色</span><span class="arrow">›</span>
         </button>
-
-        <button
-          class="settings-item"
-          id="changePasswordOpen"
-          type="button"
-        >
-          <span id="settingsPasswordLabel">修改密码</span>
-          <span class="arrow">›</span>
+        <button class="settings-item" id="changePasswordOpen" type="button">
+          <span id="settingsPasswordLabel">修改密码</span><span class="arrow">›</span>
         </button>
-
-        <button
-          class="settings-item"
-          type="button"
-          data-open-field="visibility"
-        >
-          <span id="settingsVisibilityLabel">资料可见范围</span>
-          <span class="arrow">›</span>
+        <button class="settings-item" type="button" data-open-field="visibility">
+          <span id="settingsVisibilityLabel">资料可见范围</span><span class="arrow">›</span>
         </button>
       </div>
     </div>
   </div>
 
   <div class="overlay" id="changePasswordOverlay" hidden>
-    <div
-      class="dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="changePasswordTitle"
-    >
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="changePasswordTitle">
       <div class="dialog-head">
         <h2 id="changePasswordTitle">修改密码</h2>
-
-        <button
-          class="dialog-close"
-          id="changePasswordClose"
-          type="button"
-          aria-label="关闭修改密码"
-        >×</button>
+        <button class="dialog-close" id="changePasswordClose" type="button" aria-label="关闭修改密码">×</button>
       </div>
-
       <form class="change-password-form" id="changePasswordForm">
-        <input
-          class="password-input"
-          id="oldPassword"
-          type="password"
-          placeholder="原密码"
-          aria-label="原密码"
-          autocomplete="current-password"
-          required
-        >
-
-        <input
-          class="password-input"
-          id="newPassword"
-          type="password"
-          placeholder="新密码"
-          aria-label="新密码"
-          autocomplete="new-password"
-          required
-        >
-
-        <input
-          class="password-input"
-          id="confirmPassword"
-          type="password"
-          placeholder="再次输入新密码"
-          aria-label="再次输入新密码"
-          autocomplete="new-password"
-          required
-        >
-
-        <button
-          class="unlock-button"
-          id="savePasswordButton"
-          type="submit"
-        >保存密码</button>
-
-        <p
-          class="change-password-message"
-          id="changePasswordMessage"
-          role="alert"
-          aria-live="polite"
-        ></p>
+        <input class="password-input" id="oldPassword" type="password" placeholder="原密码" aria-label="原密码" autocomplete="current-password" required>
+        <input class="password-input" id="newPassword" type="password" placeholder="新密码" aria-label="新密码" autocomplete="new-password" required>
+        <input class="password-input" id="confirmPassword" type="password" placeholder="再次输入新密码" aria-label="再次输入新密码" autocomplete="new-password" required>
+        <button class="unlock-button" id="savePasswordButton" type="submit">保存密码</button>
+        <p class="change-password-message" id="changePasswordMessage" role="alert" aria-live="polite"></p>
       </form>
     </div>
   </div>
@@ -754,243 +441,47 @@
   <script>
     const translations = {
       zh: {
-        title: '个人资料',
-        closeProfile: '关闭个人资料',
-        listLabel: '个人资料字段',
-        choose: '请选择',
-        closeOptions: '关闭选项',
-        closed: '个人资料页面已关闭',
-        empty: '未填写',
-
-        labels: [
-          '昵称',
-          '性别',
-          '生日',
-          '所在地',
-          '个人简介',
-          '感情状态',
-          '职业',
-          '教育程度',
-          '学校',
-          '兴趣爱好',
-          '常用语言',
-          '家乡',
-          '星座',
-          '主题颜色',
-          '资料可见范围',
-          '背景颜色'
-        ],
-
-        placeholders: {
-          occupation: '请输入职业',
-          school: '请输入学校名称'
-        },
-
+        title: '个人资料', closeProfile: '关闭个人资料', listLabel: '个人资料字段', choose: '请选择', closeOptions: '关闭选项', closed: '个人资料页面已关闭', empty: '未填写',
+        labels: ['昵称','性别','生日','所在地','个人简介','感情状态','职业','教育程度','学校','兴趣爱好','常用语言','家乡','星座','主题颜色','资料可见范围','背景颜色'],
+        placeholders: { occupation: '请输入职业', school: '请输入学校名称' },
         options: {
-          gender: ['女', '男', '非二元', '不愿透露'],
-          location: ['北京', '上海', '广州', '深圳', '杭州', '成都', '其他'],
-          relationship: ['单身', '恋爱中', '已婚', '保密'],
-          education: ['高中及以下', '专科', '本科', '硕士', '博士', '其他'],
-          interests: ['旅行', '摄影', '阅读', '音乐', '电影', '运动', '美食', '游戏'],
-          language: ['中文', 'English', '日本語', '한국어', 'Français'],
-          theme: ['红色', '橙色', '黄色', '绿色', '青色', '蓝色', '靛蓝色', '紫色', '粉色', '灰色'],
-          zodiac: ['白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
-          visibility: ['所有人', '仅好友', '仅自己'],
-          background: ['白色', '红色', '橙色', '黄色', '绿色', '青色', '蓝色', '靛蓝色', '紫色', '粉色', '灰色']
+          gender: ['女','男','非二元','不愿透露'], location: ['北京','上海','广州','深圳','杭州','成都','其他'], relationship: ['单身','恋爱中','已婚','保密'], education: ['高中及以下','专科','本科','硕士','博士','其他'], interests: ['旅行','摄影','阅读','音乐','电影','运动','美食','游戏'], language: ['中文','English','日本語','한국어','Français'], theme: ['红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色'], zodiac: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座'], visibility: ['所有人','仅好友','仅自己'], background: ['白色','红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色']
         }
       },
-
       en: {
-        title: 'Profile',
-        closeProfile: 'Close profile',
-        listLabel: 'Profile fields',
-        choose: 'Choose an option',
-        closeOptions: 'Close options',
-        closed: 'Profile closed',
-        empty: 'Not set',
-
-        labels: [
-          'Nickname',
-          'Gender',
-          'Birthday',
-          'Location',
-          'Bio',
-          'Relationship',
-          'Occupation',
-          'Education',
-          'School',
-          'Interests',
-          'Language',
-          'Hometown',
-          'Zodiac sign',
-          'Theme color',
-          'Profile visibility',
-          'Background color'
-        ],
-
-        placeholders: {
-          occupation: 'Enter your occupation',
-          school: 'Enter your school'
-        },
-
+        title: 'Profile', closeProfile: 'Close profile', listLabel: 'Profile fields', choose: 'Choose an option', closeOptions: 'Close options', closed: 'Profile closed', empty: 'Not set',
+        labels: ['Nickname','Gender','Birthday','Location','Bio','Relationship','Occupation','Education','School','Interests','Language','Hometown','Zodiac sign','Theme color','Profile visibility','Background color'],
+        placeholders: { occupation: 'Enter your occupation', school: 'Enter your school' },
         options: {
-          gender: ['Woman', 'Man', 'Non-binary', 'Prefer not to say'],
-          location: ['Beijing', 'Shanghai', 'Guangzhou', 'Shenzhen', 'Hangzhou', 'Chengdu', 'Other'],
-          relationship: ['Single', 'In a relationship', 'Married', 'Private'],
-          education: ['High school or below', 'Associate degree', 'Bachelor’s degree', 'Master’s degree', 'Doctorate', 'Other'],
-          interests: ['Travel', 'Photography', 'Reading', 'Music', 'Movies', 'Sports', 'Food', 'Gaming'],
-          language: ['中文', 'English', '日本語', '한국어', 'Français'],
-          theme: ['Red', 'Orange', 'Yellow', 'Green', 'Cyan', 'Blue', 'Indigo', 'Violet', 'Pink', 'Gray'],
-          zodiac: ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'],
-          visibility: ['Everyone', 'Friends only', 'Only me'],
-          background: ['White', 'Red', 'Orange', 'Yellow', 'Green', 'Cyan', 'Blue', 'Indigo', 'Violet', 'Pink', 'Gray']
+          gender: ['Woman','Man','Non-binary','Prefer not to say'], location: ['Beijing','Shanghai','Guangzhou','Shenzhen','Hangzhou','Chengdu','Other'], relationship: ['Single','In a relationship','Married','Private'], education: ['High school or below','Associate degree','Bachelor’s degree','Master’s degree','Doctorate','Other'], interests: ['Travel','Photography','Reading','Music','Movies','Sports','Food','Gaming'], language: ['中文','English','日本語','한국어','Français'], theme: ['Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray'], zodiac: ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'], visibility: ['Everyone','Friends only','Only me'], background: ['White','Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray']
         }
       },
-
       ja: {
-        title: 'プロフィール',
-        closeProfile: 'プロフィールを閉じる',
-        listLabel: 'プロフィール項目',
-        choose: '選択してください',
-        closeOptions: '選択肢を閉じる',
-        closed: 'プロフィールを閉じました',
-        empty: '未設定',
-
-        labels: [
-          'ニックネーム',
-          '性別',
-          '誕生日',
-          '現在地',
-          '自己紹介',
-          '交際状況',
-          '職業',
-          '学歴',
-          '学校',
-          '趣味',
-          '使用言語',
-          '出身地',
-          '星座',
-          'テーマカラー',
-          '公開範囲',
-          '背景色'
-        ],
-
-        placeholders: {
-          occupation: '職業を入力',
-          school: '学校名を入力'
-        },
-
+        title: 'プロフィール', closeProfile: 'プロフィールを閉じる', listLabel: 'プロフィール項目', choose: '選択してください', closeOptions: '選択肢を閉じる', closed: 'プロフィールを閉じました', empty: '未設定',
+        labels: ['ニックネーム','性別','誕生日','現在地','自己紹介','交際状況','職業','学歴','学校','趣味','使用言語','出身地','星座','テーマカラー','公開範囲','背景色'],
+        placeholders: { occupation: '職業を入力', school: '学校名を入力' },
         options: {
-          gender: ['女性', '男性', 'ノンバイナリー', '回答しない'],
-          location: ['北京', '上海', '広州', '深圳', '杭州', '成都', 'その他'],
-          relationship: ['独身', '交際中', '既婚', '非公開'],
-          education: ['高校以下', '短期大学', '大学', '修士', '博士', 'その他'],
-          interests: ['旅行', '写真', '読書', '音楽', '映画', 'スポーツ', 'グルメ', 'ゲーム'],
-          language: ['中文', 'English', '日本語', '한국어', 'Français'],
-          theme: ['レッド', 'オレンジ', 'イエロー', 'グリーン', 'シアン', 'ブルー', 'インディゴ', 'バイオレット', 'ピンク', 'グレー'],
-          zodiac: ['おひつじ座', 'おうし座', 'ふたご座', 'かに座', 'しし座', 'おとめ座', 'てんびん座', 'さそり座', 'いて座', 'やぎ座', 'みずがめ座', 'うお座'],
-          visibility: ['全員', '友達のみ', '自分のみ'],
-          background: ['ホワイト', 'レッド', 'オレンジ', 'イエロー', 'グリーン', 'シアン', 'ブルー', 'インディゴ', 'バイオレット', 'ピンク', 'グレー']
+          gender: ['女性','男性','ノンバイナリー','回答しない'], location: ['北京','上海','広州','深圳','杭州','成都','その他'], relationship: ['独身','交際中','既婚','非公開'], education: ['高校以下','短期大学','大学','修士','博士','その他'], interests: ['旅行','写真','読書','音楽','映画','スポーツ','グルメ','ゲーム'], language: ['中文','English','日本語','한국어','Français'], theme: ['レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー'], zodiac: ['おひつじ座','おうし座','ふたご座','かに座','しし座','おとめ座','てんびん座','さそり座','いて座','やぎ座','みずがめ座','うお座'], visibility: ['全員','友達のみ','自分のみ'], background: ['ホワイト','レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー']
         }
       },
-
       ko: {
-        title: '프로필',
-        closeProfile: '프로필 닫기',
-        listLabel: '프로필 항목',
-        choose: '선택하세요',
-        closeOptions: '선택 창 닫기',
-        closed: '프로필을 닫았습니다',
-        empty: '미입력',
-
-        labels: [
-          '닉네임',
-          '성별',
-          '생일',
-          '현재 위치',
-          '소개',
-          '연애 상태',
-          '직업',
-          '학력',
-          '학교',
-          '관심사',
-          '사용 언어',
-          '고향',
-          '별자리',
-          '테마 색상',
-          '공개 범위',
-          '배경색'
-        ],
-
-        placeholders: {
-          occupation: '직업 입력',
-          school: '학교명 입력'
-        },
-
+        title: '프로필', closeProfile: '프로필 닫기', listLabel: '프로필 항목', choose: '선택하세요', closeOptions: '선택 창 닫기', closed: '프로필을 닫았습니다', empty: '미입력',
+        labels: ['닉네임','성별','생일','현재 위치','소개','연애 상태','직업','학력','학교','관심사','사용 언어','고향','별자리','테마 색상','공개 범위','배경색'],
+        placeholders: { occupation: '직업 입력', school: '학교명 입력' },
         options: {
-          gender: ['여성', '남성', '논바이너리', '공개 안 함'],
-          location: ['베이징', '상하이', '광저우', '선전', '항저우', '청두', '기타'],
-          relationship: ['싱글', '연애 중', '기혼', '비공개'],
-          education: ['고등학교 이하', '전문대', '학사', '석사', '박사', '기타'],
-          interests: ['여행', '사진', '독서', '음악', '영화', '스포츠', '음식', '게임'],
-          language: ['中文', 'English', '日本語', '한국어', 'Français'],
-          theme: ['빨간색', '주황색', '노란색', '초록색', '청록색', '파란색', '남색', '보라색', '분홍색', '회색'],
-          zodiac: ['양자리', '황소자리', '쌍둥이자리', '게자리', '사자자리', '처녀자리', '천칭자리', '전갈자리', '사수자리', '염소자리', '물병자리', '물고기자리'],
-          visibility: ['모두', '친구만', '나만'],
-          background: ['흰색', '빨간색', '주황색', '노란색', '초록색', '청록색', '파란색', '남색', '보라색', '분홍색', '회색']
+          gender: ['여성','남성','논바이너리','공개 안 함'], location: ['베이징','상하이','광저우','선전','항저우','청두','기타'], relationship: ['싱글','연애 중','기혼','비공개'], education: ['고등학교 이하','전문대','학사','석사','박사','기타'], interests: ['여행','사진','독서','음악','영화','스포츠','음식','게임'], language: ['中文','English','日本語','한국어','Français'], theme: ['빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색'], zodiac: ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'], visibility: ['모두','친구만','나만'], background: ['흰색','빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색']
         }
       },
-
       fr: {
-        title: 'Profil',
-        closeProfile: 'Fermer le profil',
-        listLabel: 'Champs du profil',
-        choose: 'Choisissez une option',
-        closeOptions: 'Fermer les options',
-        closed: 'Profil fermé',
-        empty: 'Non renseigné',
-
-        labels: [
-          'Surnom',
-          'Genre',
-          'Date de naissance',
-          'Lieu',
-          'Présentation',
-          'Situation amoureuse',
-          'Profession',
-          'Études',
-          'École',
-          'Centres d’intérêt',
-          'Langue',
-          'Ville d’origine',
-          'Signe astrologique',
-          'Couleur du thème',
-          'Visibilité du profil',
-          'Couleur d’arrière-plan'
-        ],
-
-        placeholders: {
-          occupation: 'Saisissez votre profession',
-          school: 'Saisissez votre école'
-        },
-
+        title: 'Profil', closeProfile: 'Fermer le profil', listLabel: 'Champs du profil', choose: 'Choisissez une option', closeOptions: 'Fermer les options', closed: 'Profil fermé', empty: 'Non renseigné',
+        labels: ['Surnom','Genre','Date de naissance','Lieu','Présentation','Situation amoureuse','Profession','Études','École','Centres d’intérêt','Langue','Ville d’origine','Signe astrologique','Couleur du thème','Visibilité du profil','Couleur d’arrière-plan'],
+        placeholders: { occupation: 'Saisissez votre profession', school: 'Saisissez votre école' },
         options: {
-          gender: ['Femme', 'Homme', 'Non-binaire', 'Je préfère ne pas répondre'],
-          location: ['Pékin', 'Shanghai', 'Canton', 'Shenzhen', 'Hangzhou', 'Chengdu', 'Autre'],
-          relationship: ['Célibataire', 'En couple', 'Marié(e)', 'Privé'],
-          education: ['Lycée ou inférieur', 'Bac +2', 'Licence', 'Master', 'Doctorat', 'Autre'],
-          interests: ['Voyage', 'Photographie', 'Lecture', 'Musique', 'Cinéma', 'Sport', 'Cuisine', 'Jeux vidéo'],
-          language: ['中文', 'English', '日本語', '한국어', 'Français'],
-          theme: ['Rouge', 'Orange', 'Jaune', 'Vert', 'Cyan', 'Bleu', 'Indigo', 'Violet', 'Rose', 'Gris'],
-          zodiac: ['Bélier', 'Taureau', 'Gémeaux', 'Cancer', 'Lion', 'Vierge', 'Balance', 'Scorpion', 'Sagittaire', 'Capricorne', 'Verseau', 'Poissons'],
-          visibility: ['Tout le monde', 'Amis uniquement', 'Moi uniquement'],
-          background: ['Blanc', 'Rouge', 'Orange', 'Jaune', 'Vert', 'Cyan', 'Bleu', 'Indigo', 'Violet', 'Rose', 'Gris']
+          gender: ['Femme','Homme','Non-binaire','Je préfère ne pas répondre'], location: ['Pékin','Shanghai','Canton','Shenzhen','Hangzhou','Chengdu','Autre'], relationship: ['Célibataire','En couple','Marié(e)','Privé'], education: ['Lycée ou inférieur','Bac +2','Licence','Master','Doctorat','Autre'], interests: ['Voyage','Photographie','Lecture','Musique','Cinéma','Sport','Cuisine','Jeux vidéo'], language: ['中文','English','日本語','한국어','Français'], theme: ['Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris'], zodiac: ['Bélier','Taureau','Gémeaux','Cancer','Lion','Vierge','Balance','Scorpion','Sagittaire','Capricorne','Verseau','Poissons'], visibility: ['Tout le monde','Amis uniquement','Moi uniquement'], background: ['Blanc','Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris']
         }
       }
     };
-
     const languageCodes = ['zh', 'en', 'ja', 'ko', 'fr'];
-
     const settingsTranslations = {
       zh: ['设置', '主题颜色', '资料可见范围', '关闭设置', '修改密码', '背景颜色'],
       en: ['Settings', 'Theme color', 'Profile visibility', 'Close settings', 'Change password', 'Background color'],
@@ -998,45 +489,21 @@
       ko: ['설정', '테마 색상', '공개 범위', '설정 닫기', '비밀번호 변경', '배경색'],
       fr: ['Paramètres', 'Couleur du thème', 'Visibilité du profil', 'Fermer les paramètres', 'Modifier le mot de passe', 'Couleur d’arrière-plan']
     };
-
     const passwordTranslations = {
-      zh: ['修改密码', '原密码', '新密码', '再次输入新密码', '保存密码', '关闭修改密码', '原密码不正确', '两次输入的新密码不一致', '密码已修改'],
-      en: ['Change password', 'Current password', 'New password', 'Enter new password again', 'Save password', 'Close password change', 'Current password is incorrect', 'New passwords do not match', 'Password changed'],
-      ja: ['パスワードを変更', '現在のパスワード', '新しいパスワード', '新しいパスワードを再入力', 'パスワードを保存', 'パスワード変更を閉じる', '現在のパスワードが正しくありません', '新しいパスワードが一致しません', 'パスワードを変更しました'],
-      ko: ['비밀번호 변경', '현재 비밀번호', '새 비밀번호', '새 비밀번호 다시 입력', '비밀번호 저장', '비밀번호 변경 닫기', '현재 비밀번호가 올바르지 않습니다', '새 비밀번호가 일치하지 않습니다', '비밀번호가 변경되었습니다'],
-      fr: ['Modifier le mot de passe', 'Mot de passe actuel', 'Nouveau mot de passe', 'Confirmez le nouveau mot de passe', 'Enregistrer', 'Fermer', 'Le mot de passe actuel est incorrect', 'Les nouveaux mots de passe ne correspondent pas', 'Mot de passe modifié']
+      zh: ['修改密码','原密码','新密码','再次输入新密码','保存密码','关闭修改密码','原密码不正确','两次输入的新密码不一致','密码已修改'],
+      en: ['Change password','Current password','New password','Enter new password again','Save password','Close password change','Current password is incorrect','New passwords do not match','Password changed'],
+      ja: ['パスワードを変更','現在のパスワード','新しいパスワード','新しいパスワードを再入力','パスワードを保存','パスワード変更を閉じる','現在のパスワードが正しくありません','新しいパスワードが一致しません','パスワードを変更しました'],
+      ko: ['비밀번호 변경','현재 비밀번호','새 비밀번호','새 비밀번호 다시 입력','비밀번호 저장','비밀번호 변경 닫기','현재 비밀번호가 올바르지 않습니다','새 비밀번호가 일치하지 않습니다','비밀번호가 변경되었습니다'],
+      fr: ['Modifier le mot de passe','Mot de passe actuel','Nouveau mot de passe','Confirmez le nouveau mot de passe','Enregistrer','Fermer','Le mot de passe actuel est incorrect','Les nouveaux mots de passe ne correspondent pas','Mot de passe modifié']
     };
-
     const themeColors = [
-      ['#f5dcdc', '#eccaca'],
-      ['#f6e3cf', '#eed3b5'],
-      ['#f5efc9', '#ece2ac'],
-      ['#dcefe3', '#cbe4d4'],
-      ['#d8f0ef', '#c4e5e3'],
-      ['#dce9f8', '#cbdcf1'],
-      ['#e0e1f3', '#ced0e9'],
-      ['#e7def4', '#d9cceb'],
-      ['#f3dee8', '#eacbd9'],
+      ['#f5dcdc', '#eccaca'], ['#f6e3cf', '#eed3b5'], ['#f5efc9', '#ece2ac'],
+      ['#dcefe3', '#cbe4d4'], ['#d8f0ef', '#c4e5e3'], ['#dce9f8', '#cbdcf1'],
+      ['#e0e1f3', '#ced0e9'], ['#e7def4', '#d9cceb'], ['#f3dee8', '#eacbd9'],
       ['#e9e9e9', '#dfdfdf']
     ];
-
-    const backgroundColors = [
-      '#ffffff',
-      '#fff1f1',
-      '#fff3e7',
-      '#fffbe0',
-      '#effaf2',
-      '#eafafa',
-      '#eef5ff',
-      '#f0f0fb',
-      '#f6f0ff',
-      '#fff0f6',
-      '#f1f1f1'
-    ];
-
+    const backgroundColors = ['#ffffff','#fff1f1','#fff3e7','#fffbe0','#effaf2','#eafafa','#eef5ff','#f0f0fb','#f6f0ff','#fff0f6','#f1f1f1'];
     let currentLanguage = 'zh';
-    let activeRow = null;
-
     const overlay = document.getElementById('overlay');
     const choices = document.getElementById('choices');
     const dialogTitle = document.getElementById('dialogTitle');
@@ -1047,21 +514,16 @@
     const changePasswordOverlay = document.getElementById('changePasswordOverlay');
     const changePasswordOpen = document.getElementById('changePasswordOpen');
     const changePasswordClose = document.getElementById('changePasswordClose');
+    let activeRow = null;
 
     function applyLanguage(code) {
       currentLanguage = code;
       const text = translations[code];
-
       document.documentElement.lang = code === 'zh' ? 'zh-CN' : code;
       document.title = text.title;
       document.getElementById('pageTitle').textContent = text.title;
-      document.getElementById('pageClose').setAttribute(
-        'aria-label',
-        text.closeProfile
-      );
-
+      document.getElementById('pageClose').setAttribute('aria-label', text.closeProfile);
       const settings = settingsTranslations[code];
-
       settingsOpen.setAttribute('aria-label', settings[0]);
       document.getElementById('settingsTitle').textContent = settings[0];
       document.getElementById('settingsThemeLabel').textContent = settings[1];
@@ -1069,61 +531,31 @@
       settingsClose.setAttribute('aria-label', settings[3]);
       document.getElementById('settingsPasswordLabel').textContent = settings[4];
       document.getElementById('settingsBackgroundLabel').textContent = settings[5];
-
       const passwordText = passwordTranslations[code];
-
-      document.getElementById('changePasswordTitle').textContent =
-        passwordText[0];
-
-      [
-        ['oldPassword', 1],
-        ['newPassword', 2],
-        ['confirmPassword', 3]
-      ].forEach(([id, index]) => {
+      document.getElementById('changePasswordTitle').textContent = passwordText[0];
+      [['oldPassword',1],['newPassword',2],['confirmPassword',3]].forEach(([id, index]) => {
         const input = document.getElementById(id);
         input.placeholder = passwordText[index];
         input.setAttribute('aria-label', passwordText[index]);
       });
-
-      document.getElementById('savePasswordButton').textContent =
-        passwordText[4];
-
-      changePasswordClose.setAttribute(
-        'aria-label',
-        passwordText[5]
-      );
-
-      document.getElementById('profileList').setAttribute(
-        'aria-label',
-        text.listLabel
-      );
-
+      document.getElementById('savePasswordButton').textContent = passwordText[4];
+      changePasswordClose.setAttribute('aria-label', passwordText[5]);
+      document.getElementById('profileList').setAttribute('aria-label', text.listLabel);
       dialogClose.setAttribute('aria-label', text.closeOptions);
       document.querySelector('#closedPage p').textContent = text.closed;
 
       document.querySelectorAll('.row[data-field]').forEach((row, index) => {
         const field = row.dataset.field;
         row.querySelector('.label').textContent = text.labels[index];
-
         const input = row.querySelector('input');
-
         if (input) {
           input.setAttribute('aria-label', text.labels[index]);
-
-          if (text.placeholders[field]) {
-            input.placeholder = text.placeholders[field];
-          }
+          if (text.placeholders[field]) input.placeholder = text.placeholders[field];
         }
-
         if (row.classList.contains('select-row')) {
           const selected = Number(row.dataset.selected);
           const value = row.querySelector('.value');
-
-          value.textContent =
-            selected < 0
-              ? text.empty
-              : text.options[field][selected];
-
+          value.textContent = selected < 0 ? text.empty : text.options[field][selected];
           value.classList.toggle('muted', selected < 0);
         }
       });
@@ -1132,226 +564,117 @@
     function closeDialog() {
       overlay.hidden = true;
       document.body.style.overflow = '';
-
-      if (activeRow) {
-        activeRow.focus();
-      }
+      if (activeRow) activeRow.focus();
     }
 
     function applyTheme(index) {
       const [normal, hover] = themeColors[index];
-
-      document.documentElement.style.setProperty(
-        '--row-color',
-        normal
-      );
-
-      document.documentElement.style.setProperty(
-        '--row-hover',
-        hover
-      );
+      document.documentElement.style.setProperty('--row-color', normal);
+      document.documentElement.style.setProperty('--row-hover', hover);
     }
 
     function applyBackground(index) {
       const color = backgroundColors[index];
-
-      document.documentElement.style.setProperty(
-        '--page-color',
-        color
-      );
-
-      document.documentElement.style.setProperty(
-        '--header-color',
-        color
-      );
-
-      document.querySelector(
-        'meta[name="theme-color"]'
-      ).content = color;
+      document.documentElement.style.setProperty('--page-color', color);
+      document.documentElement.style.setProperty('--header-color', color);
+      document.querySelector('meta[name="theme-color"]').content = color;
     }
 
     function saveProfile() {
       const fields = {};
-
       document.querySelectorAll('.row[data-field]').forEach(row => {
         const field = row.dataset.field;
         const input = row.querySelector('input');
-
-        fields[field] = input
-          ? input.value
-          : Number(row.dataset.selected);
+        fields[field] = input ? input.value : Number(row.dataset.selected);
       });
-
       try {
-        localStorage.setItem(
-          'profileData',
-          JSON.stringify({
-            language: currentLanguage,
-            fields
-          })
-        );
+        localStorage.setItem('profileData', JSON.stringify({ language: currentLanguage, fields }));
       } catch (error) {}
     }
 
     function restoreProfile() {
       let saved;
-
-      try {
-        saved = JSON.parse(localStorage.getItem('profileData'));
-      } catch (error) {
-        saved = null;
-      }
-
-      if (!saved || !saved.fields) {
-        return {
-          language: 'zh',
-          theme: 9,
-          background: 0
-        };
-      }
+      try { saved = JSON.parse(localStorage.getItem('profileData')); }
+      catch (error) { saved = null; }
+      if (!saved || !saved.fields) return { language: 'zh', theme: 9, background: 0 };
 
       document.querySelectorAll('.row[data-field]').forEach(row => {
         const field = row.dataset.field;
-
-        if (!(field in saved.fields)) {
-          return;
-        }
-
+        if (!(field in saved.fields)) return;
         const input = row.querySelector('input');
-
-        if (input) {
-          input.value = saved.fields[field];
-        } else {
-          row.dataset.selected = saved.fields[field];
-        }
+        if (input) input.value = saved.fields[field];
+        else row.dataset.selected = saved.fields[field];
       });
-
-      const language = translations[saved.language]
-        ? saved.language
-        : 'zh';
-
+      const language = translations[saved.language] ? saved.language : 'zh';
       const theme = Number(saved.fields.theme);
       const background = Number(saved.fields.background);
-
-      return {
-        language,
-        theme: themeColors[theme] ? theme : 9,
-        background: backgroundColors[background]
-          ? background
-          : 0
-      };
+      return { language, theme: themeColors[theme] ? theme : 9, background: backgroundColors[background] ? background : 0 };
     }
 
-    document
-      .querySelectorAll('.row[data-field] input')
-      .forEach(input => {
-        input.addEventListener('input', saveProfile);
-        input.addEventListener('change', saveProfile);
-      });
+    document.querySelectorAll('.row[data-field] input').forEach(input => {
+      input.addEventListener('input', saveProfile);
+      input.addEventListener('change', saveProfile);
+    });
 
     document.querySelectorAll('.select-row').forEach(row => {
       row.addEventListener('click', () => {
         activeRow = row;
-
         const text = translations[currentLanguage];
         const field = row.dataset.field;
         const current = Number(row.dataset.selected);
-
-        const rowIndex = [
-          ...document.querySelectorAll('.row[data-field]')
-        ].indexOf(row);
-
-        dialogTitle.textContent = text.labels[rowIndex];
+        dialogTitle.textContent = text.labels[[...document.querySelectorAll('.row[data-field]')].indexOf(row)];
         choices.replaceChildren();
 
         text.options[field].forEach((option, optionIndex) => {
           const button = document.createElement('button');
-
           button.type = 'button';
           button.className = 'choice';
           button.setAttribute('role', 'radio');
-          button.setAttribute(
-            'aria-checked',
-            String(optionIndex === current)
-          );
-
+          button.setAttribute('aria-checked', String(optionIndex === current));
           button.textContent = option;
-
-          if (
-            field === 'theme' ||
-            field === 'background'
-          ) {
+          if (field === 'theme' || field === 'background') {
             const swatch = document.createElement('span');
             swatch.className = 'color-dot';
-
-            swatch.style.background =
-              field === 'theme'
-                ? themeColors[optionIndex][0]
-                : backgroundColors[optionIndex];
-
+            swatch.style.background = field === 'theme' ? themeColors[optionIndex][0] : backgroundColors[optionIndex];
             button.prepend(swatch);
           }
-
           button.addEventListener('click', () => {
             row.dataset.selected = optionIndex;
             closeDialog();
-
             if (field === 'language') {
               applyLanguage(languageCodes[optionIndex]);
             } else if (field === 'theme') {
               applyTheme(optionIndex);
-              row.querySelector('.value').textContent = option;
+              const value = row.querySelector('.value');
+              value.textContent = option;
             } else if (field === 'background') {
               applyBackground(optionIndex);
-              row.querySelector('.value').textContent = option;
+              const value = row.querySelector('.value');
+              value.textContent = option;
             } else {
               const value = row.querySelector('.value');
               value.textContent = option;
               value.classList.remove('muted');
             }
-
             saveProfile();
           });
-
           choices.appendChild(button);
         });
 
         overlay.hidden = false;
         document.body.style.overflow = 'hidden';
-
-        choices
-          .querySelector('[aria-checked="true"]')
-          ?.focus() ||
-          choices.firstElementChild?.focus();
+        choices.querySelector('[aria-checked="true"]')?.focus() || choices.firstElementChild?.focus();
       });
     });
 
     dialogClose.addEventListener('click', closeDialog);
-
     overlay.addEventListener('click', event => {
-      if (event.target === overlay) {
-        closeDialog();
-      }
+      if (event.target === overlay) closeDialog();
     });
-
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && !overlay.hidden) {
-        closeDialog();
-      }
-
-      if (
-        event.key === 'Escape' &&
-        !settingsOverlay.hidden
-      ) {
-        closeSettings();
-      }
-
-      if (
-        event.key === 'Escape' &&
-        !changePasswordOverlay.hidden
-      ) {
-        closeChangePassword();
-      }
+      if (event.key === 'Escape' && !overlay.hidden) closeDialog();
+      if (event.key === 'Escape' && !settingsOverlay.hidden) closeSettings();
+      if (event.key === 'Escape' && !changePasswordOverlay.hidden) closeChangePassword();
     });
 
     function closeSettings() {
@@ -1363,162 +686,80 @@
     settingsOpen.addEventListener('click', () => {
       settingsOverlay.hidden = false;
       document.body.style.overflow = 'hidden';
-
-      settingsOverlay
-        .querySelector('.settings-item')
-        .focus();
+      settingsOverlay.querySelector('.settings-item').focus();
     });
-
     settingsClose.addEventListener('click', closeSettings);
-
     settingsOverlay.addEventListener('click', event => {
-      if (event.target === settingsOverlay) {
-        closeSettings();
-      }
+      if (event.target === settingsOverlay) closeSettings();
     });
-
-    document
-      .querySelectorAll('[data-open-field]')
-      .forEach(button => {
-        button.addEventListener('click', () => {
-          const field = button.dataset.openField;
-
-          closeSettings();
-
-          document
-            .querySelector(
-              `.select-row[data-field="${field}"]`
-            )
-            .click();
-        });
+    document.querySelectorAll('[data-open-field]').forEach(button => {
+      button.addEventListener('click', () => {
+        const field = button.dataset.openField;
+        closeSettings();
+        document.querySelector(`.select-row[data-field="${field}"]`).click();
       });
+    });
 
     function closeChangePassword() {
       changePasswordOverlay.hidden = true;
       document.body.style.overflow = '';
-
-      document
-        .getElementById('changePasswordForm')
-        .reset();
-
-      document.getElementById(
-        'changePasswordMessage'
-      ).textContent = '';
-
+      document.getElementById('changePasswordForm').reset();
+      document.getElementById('changePasswordMessage').textContent = '';
       changePasswordOpen.focus();
     }
 
     changePasswordOpen.addEventListener('click', () => {
       closeSettings();
-
       changePasswordOverlay.hidden = false;
       document.body.style.overflow = 'hidden';
-
       document.getElementById('oldPassword').focus();
     });
-
-    changePasswordClose.addEventListener(
-      'click',
-      closeChangePassword
-    );
-
-    changePasswordOverlay.addEventListener(
-      'click',
-      event => {
-        if (event.target === changePasswordOverlay) {
-          closeChangePassword();
-        }
-      }
-    );
+    changePasswordClose.addEventListener('click', closeChangePassword);
+    changePasswordOverlay.addEventListener('click', event => {
+      if (event.target === changePasswordOverlay) closeChangePassword();
+    });
 
     let sitePassword;
+    try { sitePassword = localStorage.getItem('profilePassword') || '1234'; }
+    catch (error) { sitePassword = '1234'; }
+    const lockScreen = document.getElementById('lockScreen');
+    const profilePage = document.getElementById('profilePage');
+    const passwordForm = document.getElementById('passwordForm');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordError = document.getElementById('passwordError');
 
-    try {
-      sitePassword =
-        localStorage.getItem('profilePassword') ||
-        '1234';
-    } catch (error) {
-      sitePassword = '1234';
-    }
-
-    const lockScreen =
-      document.getElementById('lockScreen');
-
-    const profilePage =
-      document.getElementById('profilePage');
-
-    const passwordForm =
-      document.getElementById('passwordForm');
-
-    const passwordInput =
-      document.getElementById('passwordInput');
-
-    const passwordError =
-      document.getElementById('passwordError');
-
-    document
-      .getElementById('changePasswordForm')
-      .addEventListener('submit', event => {
-        event.preventDefault();
-
-        const passwordText =
-          passwordTranslations[currentLanguage];
-
-        const oldPassword =
-          document.getElementById('oldPassword');
-
-        const newPassword =
-          document.getElementById('newPassword');
-
-        const confirmPassword =
-          document.getElementById('confirmPassword');
-
-        const message =
-          document.getElementById(
-            'changePasswordMessage'
-          );
-
-        message.classList.remove('success');
-
-        if (oldPassword.value !== sitePassword) {
-          message.textContent = passwordText[6];
-          oldPassword.select();
-        } else if (
-          newPassword.value !== confirmPassword.value
-        ) {
-          message.textContent = passwordText[7];
-          confirmPassword.select();
-        } else {
-          sitePassword = newPassword.value;
-
-          try {
-            localStorage.setItem(
-              'profilePassword',
-              sitePassword
-            );
-          } catch (error) {}
-
-          document
-            .getElementById('changePasswordForm')
-            .reset();
-
-          message.classList.add('success');
-          message.textContent = passwordText[8];
-        }
-      });
+    document.getElementById('changePasswordForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const passwordText = passwordTranslations[currentLanguage];
+      const oldPassword = document.getElementById('oldPassword');
+      const newPassword = document.getElementById('newPassword');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const message = document.getElementById('changePasswordMessage');
+      message.classList.remove('success');
+      if (oldPassword.value !== sitePassword) {
+        message.textContent = passwordText[6];
+        oldPassword.select();
+      } else if (newPassword.value !== confirmPassword.value) {
+        message.textContent = passwordText[7];
+        confirmPassword.select();
+      } else {
+        sitePassword = newPassword.value;
+        try { localStorage.setItem('profilePassword', sitePassword); } catch (error) {}
+        document.getElementById('changePasswordForm').reset();
+        message.classList.add('success');
+        message.textContent = passwordText[8];
+      }
+    });
 
     passwordForm.addEventListener('submit', event => {
       event.preventDefault();
-
-      if (
-        passwordInput.value
-          .trim()
-          .toLowerCase() === 'flappybird'
-      ) {
-        window.location.href = 'flappy-bird.html';
+      if (passwordInput.value.trim().toLowerCase() === 'flappybird') {
+        passwordError.textContent = '';
+        passwordInput.value = '';
+        lockScreen.hidden = true;
+        openFlappyBird();
         return;
       }
-
       if (passwordInput.value === sitePassword) {
         passwordError.textContent = '';
         passwordInput.value = '';
@@ -1526,35 +767,164 @@
         profilePage.hidden = false;
         window.scrollTo(0, 0);
       } else {
-        passwordError.textContent =
-          '密码错误，请重试';
-
+        passwordError.textContent = '密码错误，请重试';
         passwordInput.select();
       }
     });
 
-    document
-      .getElementById('pageClose')
-      .addEventListener('click', () => {
-        saveProfile();
-
-        overlay.hidden = true;
-        settingsOverlay.hidden = true;
-        changePasswordOverlay.hidden = true;
-        profilePage.hidden = true;
-        lockScreen.hidden = false;
-        document.body.style.overflow = '';
-        passwordInput.focus();
-      });
-
+    document.getElementById('pageClose').addEventListener('click', () => {
+      saveProfile();
+      overlay.hidden = true;
+      settingsOverlay.hidden = true;
+      changePasswordOverlay.hidden = true;
+      profilePage.hidden = true;
+      lockScreen.hidden = false;
+      document.body.style.overflow = '';
+      passwordInput.focus();
+    });
     window.addEventListener('pagehide', saveProfile);
-
     const restoredProfile = restoreProfile();
-
     applyTheme(restoredProfile.theme);
     applyBackground(restoredProfile.background);
     applyLanguage(restoredProfile.language);
     passwordInput.focus();
+
+    const flappyView = document.getElementById('flappyView');
+    const flappyCanvas = document.getElementById('flappyCanvas');
+    const flappyShell = document.getElementById('flappyShell');
+    const flappyCtx = flappyCanvas.getContext('2d');
+    const flappyScore = document.getElementById('flappyScore');
+    const flappyMessage = document.getElementById('flappyMessage');
+    const flappyMessageTitle = document.getElementById('flappyMessageTitle');
+    const flappyMessageText = document.getElementById('flappyMessageText');
+    const flappyResult = document.getElementById('flappyResult');
+    const flappyExit = document.getElementById('flappyExit');
+    let fbWidth = 520, fbHeight = 760, fbScale = 1, fbState = 'ready';
+    let fbScoreValue = 0, fbBest = 0, fbLastTime = 0, fbPipeTimer = 0, fbRunTime = 0, fbGroundOffset = 0;
+    try { fbBest = Number(localStorage.getItem('skyHopperBest') || 0); } catch (error) {}
+    const fbPipes = [];
+    const fbBird = { x: 130, y: 330, radius: 19, velocity: 0, rotation: 0, wing: 0 };
+
+    function resizeFlappy() {
+      const rect = flappyShell.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      flappyCanvas.width = Math.round(rect.width * dpr);
+      flappyCanvas.height = Math.round(rect.height * dpr);
+      flappyCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      fbWidth = rect.width; fbHeight = rect.height;
+      fbScale = Math.min(fbWidth / 520, fbHeight / 760);
+      fbBird.x = fbWidth * .25;
+      if (fbState === 'ready') fbBird.y = fbHeight * .44;
+    }
+    function resetFlappy() {
+      fbPipes.length = 0; fbScoreValue = 0; fbPipeTimer = 0; fbRunTime = 0; fbGroundOffset = 0;
+      fbBird.x = fbWidth * .25; fbBird.y = fbHeight * .44; fbBird.velocity = 0; fbBird.rotation = 0;
+      flappyScore.textContent = '0'; flappyResult.textContent = '';
+    }
+    function openFlappyBird() {
+      flappyView.hidden = false;
+      document.body.style.overflow = 'hidden';
+      fbState = 'ready';
+      flappyMessageTitle.textContent = 'Flappy Bird';
+      flappyMessageText.textContent = 'Guide the little bird through the pipes.';
+      flappyMessage.hidden = false;
+      resizeFlappy(); resetFlappy(); flappyCanvas.focus();
+    }
+    function closeFlappyBird() {
+      fbState = 'ready'; flappyView.hidden = true; lockScreen.hidden = false;
+      document.body.style.overflow = ''; passwordInput.focus();
+    }
+    function flapBird() {
+      if (fbState === 'over') { resetFlappy(); fbState = 'running'; flappyMessage.hidden = true; }
+      else if (fbState === 'ready') { fbState = 'running'; flappyMessage.hidden = true; }
+      fbBird.velocity = -430 * Math.max(.82, fbScale); fbBird.wing = 1;
+    }
+    function addFlappyPipe() {
+      const gap = Math.max(148, Math.min(190, fbHeight * .25));
+      const groundTop = fbHeight - 82, margin = 88;
+      const gapY = margin + Math.random() * (groundTop - gap - margin * 2);
+      fbPipes.push({ x: fbWidth + 20, width: Math.max(67, fbWidth * .14), gapY, gap, scored: false });
+    }
+    function endFlappy() {
+      if (fbState !== 'running') return;
+      fbState = 'over'; fbBest = Math.max(fbBest, fbScoreValue);
+      try { localStorage.setItem('skyHopperBest', fbBest); } catch (error) {}
+      flappyMessageTitle.textContent = 'Game Over';
+      flappyMessageText.textContent = 'Press Space or tap to try again.';
+      flappyResult.textContent = `Score: ${fbScoreValue}  ·  Best: ${fbBest}`;
+      flappyMessage.hidden = false;
+    }
+    function updateFlappy(dt) {
+      fbBird.wing = Math.max(0, fbBird.wing - dt * 5);
+      if (fbState === 'ready') { fbBird.y = fbHeight * .44 + Math.sin(performance.now() / 260) * 8; fbBird.rotation = 0; return; }
+      if (fbState !== 'running') return;
+      fbBird.velocity += 1380 * dt; fbBird.y += fbBird.velocity * dt;
+      fbBird.rotation = Math.max(-.45, Math.min(1.25, fbBird.velocity / 600));
+      fbGroundOffset = (fbGroundOffset + 125 * dt) % 38; fbPipeTimer += dt; fbRunTime += dt;
+      const spawnInterval = Math.max(.55, 1.55 - fbRunTime * .008 - fbScoreValue * .012);
+      if (fbPipeTimer > spawnInterval) { fbPipeTimer = 0; addFlappyPipe(); }
+      const speed = 185 + fbRunTime * 6;
+      for (let i = fbPipes.length - 1; i >= 0; i--) {
+        const pipe = fbPipes[i]; pipe.x -= speed * dt;
+        if (!pipe.scored && pipe.x + pipe.width < fbBird.x) { pipe.scored = true; fbScoreValue++; flappyScore.textContent = fbScoreValue; }
+        const overlaps = fbBird.x + fbBird.radius > pipe.x && fbBird.x - fbBird.radius < pipe.x + pipe.width;
+        if (overlaps && (fbBird.y - fbBird.radius < pipe.gapY || fbBird.y + fbBird.radius > pipe.gapY + pipe.gap)) endFlappy();
+        if (pipe.x + pipe.width < -20) fbPipes.splice(i, 1);
+      }
+      if (fbBird.y - fbBird.radius < 0 || fbBird.y + fbBird.radius > fbHeight - 82) endFlappy();
+    }
+    function fbRoundedRect(x, y, w, h, r, fill) {
+      flappyCtx.beginPath(); flappyCtx.roundRect(x, y, w, h, r); flappyCtx.fillStyle = fill; flappyCtx.fill();
+    }
+    function drawFlappyCloud(x, y, size) {
+      flappyCtx.fillStyle = 'rgba(255,255,255,.7)'; flappyCtx.beginPath();
+      flappyCtx.arc(x, y, size * .34, 0, Math.PI * 2); flappyCtx.arc(x + size * .36, y - size * .16, size * .42, 0, Math.PI * 2);
+      flappyCtx.arc(x + size * .78, y, size * .3, 0, Math.PI * 2); flappyCtx.fill();
+    }
+    function drawFlappyBird() {
+      const c = flappyCtx; c.save(); c.translate(fbBird.x, fbBird.y); c.rotate(fbBird.rotation);
+      c.lineWidth = 3; c.strokeStyle = '#713f28'; c.fillStyle = '#ffd84d'; c.beginPath(); c.ellipse(0,0,24,19,0,0,Math.PI*2); c.fill(); c.stroke();
+      c.fillStyle = '#ff9f43'; c.beginPath(); c.moveTo(19,-3); c.lineTo(36,3); c.lineTo(19,9); c.closePath(); c.fill(); c.stroke();
+      c.fillStyle = '#fff'; c.beginPath(); c.arc(10,-9,8,0,Math.PI*2); c.fill(); c.stroke(); c.fillStyle = '#20272a'; c.beginPath(); c.arc(13,-9,3,0,Math.PI*2); c.fill();
+      c.save(); c.rotate(-.35 - fbBird.wing * .8); c.fillStyle = '#f3a936'; c.beginPath(); c.ellipse(-10,5,14,8,0,0,Math.PI*2); c.fill(); c.stroke(); c.restore(); c.restore();
+    }
+    function drawFlappyPipe(pipe) {
+      const c = flappyCtx, groundTop = fbHeight - 82;
+      const gradient = c.createLinearGradient(pipe.x,0,pipe.x+pipe.width,0);
+      gradient.addColorStop(0,'#60b83f'); gradient.addColorStop(.5,'#9be75e'); gradient.addColorStop(1,'#3f9133');
+      c.fillStyle = gradient; c.strokeStyle = '#286d2d'; c.lineWidth = 3;
+      c.fillRect(pipe.x,0,pipe.width,pipe.gapY-22); c.strokeRect(pipe.x,-2,pipe.width,pipe.gapY-20);
+      fbRoundedRect(pipe.x-7,pipe.gapY-28,pipe.width+14,28,4,gradient); c.strokeRect(pipe.x-7,pipe.gapY-28,pipe.width+14,28);
+      const lowerY = pipe.gapY + pipe.gap;
+      fbRoundedRect(pipe.x-7,lowerY,pipe.width+14,28,4,gradient); c.strokeRect(pipe.x-7,lowerY,pipe.width+14,28);
+      c.fillStyle = gradient; c.fillRect(pipe.x,lowerY+28,pipe.width,groundTop-lowerY-28); c.strokeRect(pipe.x,lowerY+27,pipe.width,groundTop-lowerY-25);
+    }
+    function drawFlappy() {
+      const c = flappyCtx, sky = c.createLinearGradient(0,0,0,fbHeight);
+      sky.addColorStop(0,'#72d3f3'); sky.addColorStop(1,'#c8f3fb'); c.fillStyle = sky; c.fillRect(0,0,fbWidth,fbHeight);
+      drawFlappyCloud(fbWidth*.08,fbHeight*.2,70); drawFlappyCloud(fbWidth*.68,fbHeight*.31,88);
+      c.fillStyle = '#9ad66c'; c.beginPath(); c.moveTo(0,fbHeight-105);
+      for (let x=0; x<=fbWidth+50; x+=50) c.quadraticCurveTo(x+25,fbHeight-145,x+50,fbHeight-105);
+      c.lineTo(fbWidth,fbHeight); c.lineTo(0,fbHeight); c.fill(); fbPipes.forEach(drawFlappyPipe);
+      c.fillStyle='#d9b864'; c.fillRect(0,fbHeight-82,fbWidth,82); c.fillStyle='#83c950'; c.fillRect(0,fbHeight-82,fbWidth,17);
+      c.fillStyle='#e9d58e'; for(let x=-fbGroundOffset;x<fbWidth;x+=38)c.fillRect(x,fbHeight-57,21,7); drawFlappyBird();
+    }
+    function flappyLoop(time) {
+      const dt = Math.min((time-fbLastTime)/1000 || 0,.034); fbLastTime=time;
+      if (!flappyView.hidden) { updateFlappy(dt); drawFlappy(); }
+      requestAnimationFrame(flappyLoop);
+    }
+    function handleFlappyInput(event) {
+      if (flappyView.hidden || event.target === flappyExit) return;
+      if (event.type === 'keydown') { if (event.code !== 'Space' || event.repeat) return; event.preventDefault(); }
+      flapBird();
+    }
+    window.addEventListener('keydown', handleFlappyInput);
+    flappyShell.addEventListener('pointerdown', handleFlappyInput);
+    flappyExit.addEventListener('click', closeFlappyBird);
+    window.addEventListener('resize', resizeFlappy);
+    requestAnimationFrame(flappyLoop);
   </script>
 </body>
 </html>
