@@ -297,7 +297,7 @@
         <section class="flappy-message" id="flappyMessage">
           <h2 id="flappyMessageTitle">Flappy Bird</h2>
           <p id="flappyMessageText">Guide the little bird through the pipes.</p>
-          <p><span class="flappy-key">SPACE</span> or tap to flap</p>
+          <p id="flappyControls"><span class="flappy-key">SPACE</span> or tap to flap</p>
           <p class="flappy-result" id="flappyResult"></p>
         </section>
       </div>
@@ -307,7 +307,7 @@
   <section class="lock-screen" id="lockScreen">
     <form class="password-form" id="passwordForm">
       <input class="password-input" id="passwordInput" type="password" placeholder="密码" aria-label="密码" autocomplete="current-password" required>
-      <button class="unlock-button" type="submit">打开</button>
+      <button class="unlock-button" id="unlockButton" type="submit">打开</button>
       <p class="password-error" id="passwordError" role="alert" aria-live="polite"></p>
     </form>
   </section>
@@ -324,24 +324,21 @@
     <section class="list" id="profileList" aria-label="个人资料字段">
       <label class="row" data-field="nickname">
         <span class="label">昵称</span>
-        <input class="text-input" type="text" value="林晓雨" aria-label="昵称">
-        <span class="arrow">›</span>
+        <input class="text-input" type="text" aria-label="昵称">
       </label>
       <button class="row select-row" type="button" data-field="gender" data-selected="0">
         <span class="label">性别</span><span class="value">女</span><span class="arrow">›</span>
       </button>
       <label class="row" data-field="birthday">
         <span class="label">生日</span>
-        <input class="text-input" type="date" value="1998-06-18" aria-label="生日">
-        <span class="arrow">›</span>
+        <input class="text-input" type="date" aria-label="生日">
       </label>
       <button class="row select-row" type="button" data-field="location" data-selected="1">
         <span class="label">所在地</span><span class="value">上海</span><span class="arrow">›</span>
       </button>
       <label class="row" data-field="bio">
         <span class="label">个人简介</span>
-        <input class="text-input" type="text" value="记录生活中的小美好" aria-label="个人简介">
-        <span class="arrow">›</span>
+        <input class="text-input" type="text" aria-label="个人简介">
       </label>
       <button class="row select-row" type="button" data-field="relationship" data-selected="-1">
         <span class="label">感情状态</span><span class="value muted">未填写</span><span class="arrow">›</span>
@@ -349,7 +346,6 @@
       <label class="row" data-field="occupation">
         <span class="label">职业</span>
         <input class="text-input" type="text" placeholder="请输入职业" aria-label="职业">
-        <span class="arrow">›</span>
       </label>
       <button class="row select-row" type="button" data-field="education" data-selected="2">
         <span class="label">教育程度</span><span class="value">本科</span><span class="arrow">›</span>
@@ -357,7 +353,6 @@
       <label class="row" data-field="school">
         <span class="label">学校</span>
         <input class="text-input" type="text" placeholder="请输入学校名称" aria-label="学校">
-        <span class="arrow">›</span>
       </label>
       <button class="row select-row" type="button" data-field="interests" data-selected="1">
         <span class="label">兴趣爱好</span><span class="value">摄影</span><span class="arrow">›</span>
@@ -367,8 +362,7 @@
       </button>
       <label class="row" data-field="hometown">
         <span class="label">家乡</span>
-        <input class="text-input" type="text" value="苏州" aria-label="家乡">
-        <span class="arrow">›</span>
+        <input class="text-input" type="text" aria-label="家乡">
       </label>
       <button class="row select-row" type="button" data-field="zodiac" data-selected="2">
         <span class="label">星座</span><span class="value">双子座</span><span class="arrow">›</span>
@@ -443,15 +437,15 @@
       zh: {
         title: '个人资料', closeProfile: '关闭个人资料', listLabel: '个人资料字段', choose: '请选择', closeOptions: '关闭选项', closed: '个人资料页面已关闭', empty: '未填写',
         labels: ['昵称','性别','生日','所在地','个人简介','感情状态','职业','教育程度','学校','兴趣爱好','常用语言','家乡','星座','主题颜色','资料可见范围','背景颜色'],
-        placeholders: { occupation: '请输入职业', school: '请输入学校名称' },
+        placeholders: { nickname: '请输入昵称', bio: '请输入个人简介', occupation: '请输入职业', school: '请输入学校名称', hometown: '请输入家乡' },
         options: {
           gender: ['女','男','非二元','不愿透露'], location: ['北京','上海','广州','深圳','杭州','成都','其他'], relationship: ['单身','恋爱中','已婚','保密'], education: ['高中及以下','专科','本科','硕士','博士','其他'], interests: ['旅行','摄影','阅读','音乐','电影','运动','美食','游戏'], language: ['中文','English','日本語','한국어','Français'], theme: ['红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色'], zodiac: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座'], visibility: ['所有人','仅好友','仅自己'], background: ['白色','红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色']
         }
       },
       en: {
         title: 'Profile', closeProfile: 'Close profile', listLabel: 'Profile fields', choose: 'Choose an option', closeOptions: 'Close options', closed: 'Profile closed', empty: 'Not set',
-        labels: ['Nickname','Gender','Birthday','Location','Bio','Relationship','Occupation','Education','School','Interests','Language','Hometown','Zodiac sign','Theme color','Profile visibility','Background color'],
-        placeholders: { occupation: 'Enter your occupation', school: 'Enter your school' },
+        labels: ['Name','Gender','Birthday','Location','Bio','Relationship','Occupation','Education','School','Interests','Language','Hometown','Zodiac sign','Theme color','Profile visibility','Background color'],
+        placeholders: { nickname: 'Please enter your name', bio: 'Please enter your bio', occupation: 'Please enter your occupation', school: 'Please enter your school', hometown: 'Please enter your hometown' },
         options: {
           gender: ['Woman','Man','Non-binary','Prefer not to say'], location: ['Beijing','Shanghai','Guangzhou','Shenzhen','Hangzhou','Chengdu','Other'], relationship: ['Single','In a relationship','Married','Private'], education: ['High school or below','Associate degree','Bachelor’s degree','Master’s degree','Doctorate','Other'], interests: ['Travel','Photography','Reading','Music','Movies','Sports','Food','Gaming'], language: ['中文','English','日本語','한국어','Français'], theme: ['Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray'], zodiac: ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'], visibility: ['Everyone','Friends only','Only me'], background: ['White','Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray']
         }
@@ -459,7 +453,7 @@
       ja: {
         title: 'プロフィール', closeProfile: 'プロフィールを閉じる', listLabel: 'プロフィール項目', choose: '選択してください', closeOptions: '選択肢を閉じる', closed: 'プロフィールを閉じました', empty: '未設定',
         labels: ['ニックネーム','性別','誕生日','現在地','自己紹介','交際状況','職業','学歴','学校','趣味','使用言語','出身地','星座','テーマカラー','公開範囲','背景色'],
-        placeholders: { occupation: '職業を入力', school: '学校名を入力' },
+        placeholders: { nickname: 'ニックネームを入力してください', bio: '自己紹介を入力してください', occupation: '職業を入力してください', school: '学校名を入力してください', hometown: '出身地を入力してください' },
         options: {
           gender: ['女性','男性','ノンバイナリー','回答しない'], location: ['北京','上海','広州','深圳','杭州','成都','その他'], relationship: ['独身','交際中','既婚','非公開'], education: ['高校以下','短期大学','大学','修士','博士','その他'], interests: ['旅行','写真','読書','音楽','映画','スポーツ','グルメ','ゲーム'], language: ['中文','English','日本語','한국어','Français'], theme: ['レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー'], zodiac: ['おひつじ座','おうし座','ふたご座','かに座','しし座','おとめ座','てんびん座','さそり座','いて座','やぎ座','みずがめ座','うお座'], visibility: ['全員','友達のみ','自分のみ'], background: ['ホワイト','レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー']
         }
@@ -467,7 +461,7 @@
       ko: {
         title: '프로필', closeProfile: '프로필 닫기', listLabel: '프로필 항목', choose: '선택하세요', closeOptions: '선택 창 닫기', closed: '프로필을 닫았습니다', empty: '미입력',
         labels: ['닉네임','성별','생일','현재 위치','소개','연애 상태','직업','학력','학교','관심사','사용 언어','고향','별자리','테마 색상','공개 범위','배경색'],
-        placeholders: { occupation: '직업 입력', school: '학교명 입력' },
+        placeholders: { nickname: '닉네임을 입력하세요', bio: '소개를 입력하세요', occupation: '직업을 입력하세요', school: '학교명을 입력하세요', hometown: '고향을 입력하세요' },
         options: {
           gender: ['여성','남성','논바이너리','공개 안 함'], location: ['베이징','상하이','광저우','선전','항저우','청두','기타'], relationship: ['싱글','연애 중','기혼','비공개'], education: ['고등학교 이하','전문대','학사','석사','박사','기타'], interests: ['여행','사진','독서','음악','영화','스포츠','음식','게임'], language: ['中文','English','日本語','한국어','Français'], theme: ['빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색'], zodiac: ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'], visibility: ['모두','친구만','나만'], background: ['흰색','빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색']
         }
@@ -475,7 +469,7 @@
       fr: {
         title: 'Profil', closeProfile: 'Fermer le profil', listLabel: 'Champs du profil', choose: 'Choisissez une option', closeOptions: 'Fermer les options', closed: 'Profil fermé', empty: 'Non renseigné',
         labels: ['Surnom','Genre','Date de naissance','Lieu','Présentation','Situation amoureuse','Profession','Études','École','Centres d’intérêt','Langue','Ville d’origine','Signe astrologique','Couleur du thème','Visibilité du profil','Couleur d’arrière-plan'],
-        placeholders: { occupation: 'Saisissez votre profession', school: 'Saisissez votre école' },
+        placeholders: { nickname: 'Saisissez votre surnom', bio: 'Saisissez votre présentation', occupation: 'Saisissez votre profession', school: 'Saisissez votre école', hometown: 'Saisissez votre ville d’origine' },
         options: {
           gender: ['Femme','Homme','Non-binaire','Je préfère ne pas répondre'], location: ['Pékin','Shanghai','Canton','Shenzhen','Hangzhou','Chengdu','Autre'], relationship: ['Célibataire','En couple','Marié(e)','Privé'], education: ['Lycée ou inférieur','Bac +2','Licence','Master','Doctorat','Autre'], interests: ['Voyage','Photographie','Lecture','Musique','Cinéma','Sport','Cuisine','Jeux vidéo'], language: ['中文','English','日本語','한국어','Français'], theme: ['Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris'], zodiac: ['Bélier','Taureau','Gémeaux','Cancer','Lion','Vierge','Balance','Scorpion','Sagittaire','Capricorne','Verseau','Poissons'], visibility: ['Tout le monde','Amis uniquement','Moi uniquement'], background: ['Blanc','Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris']
         }
@@ -495,6 +489,13 @@
       ja: ['パスワードを変更','現在のパスワード','新しいパスワード','新しいパスワードを再入力','パスワードを保存','パスワード変更を閉じる','現在のパスワードが正しくありません','新しいパスワードが一致しません','パスワードを変更しました'],
       ko: ['비밀번호 변경','현재 비밀번호','새 비밀번호','새 비밀번호 다시 입력','비밀번호 저장','비밀번호 변경 닫기','현재 비밀번호가 올바르지 않습니다','새 비밀번호가 일치하지 않습니다','비밀번호가 변경되었습니다'],
       fr: ['Modifier le mot de passe','Mot de passe actuel','Nouveau mot de passe','Confirmez le nouveau mot de passe','Enregistrer','Fermer','Le mot de passe actuel est incorrect','Les nouveaux mots de passe ne correspondent pas','Mot de passe modifié']
+    };
+    const interfaceTranslations = {
+      zh: { password: '密码', open: '打开', wrong: '密码错误，请重试', gameHelp: '引导小鸟穿过水管。', controls: '<span class="flappy-key">空格键</span> 或轻触来飞行', gameOver: '游戏结束', retry: '按空格键或轻触重试。', score: '得分', best: '最高分', returnLogin: '返回登录', gameLabel: 'Flappy Bird 游戏。按空格键或轻触让小鸟向上飞。' },
+      en: { password: 'Password', open: 'Open', wrong: 'Incorrect password. Please try again.', gameHelp: 'Guide the little bird through the pipes.', controls: '<span class="flappy-key">SPACE</span> or tap to flap', gameOver: 'Game Over', retry: 'Press Space or tap to try again.', score: 'Score', best: 'Best', returnLogin: 'Return to login', gameLabel: 'Flappy Bird game. Press Space or tap to make the bird fly upward.' },
+      ja: { password: 'パスワード', open: '開く', wrong: 'パスワードが違います。もう一度お試しください。', gameHelp: '小鳥をパイプの間に通してください。', controls: '<span class="flappy-key">スペース</span> またはタップで羽ばたく', gameOver: 'ゲームオーバー', retry: 'スペースキーまたはタップでもう一度。', score: 'スコア', best: 'ベスト', returnLogin: 'ログインに戻る', gameLabel: 'Flappy Bird。スペースキーまたはタップで小鳥を上昇させます。' },
+      ko: { password: '비밀번호', open: '열기', wrong: '비밀번호가 올바르지 않습니다. 다시 시도하세요.', gameHelp: '작은 새가 파이프 사이를 지나가게 하세요.', controls: '<span class="flappy-key">스페이스</span> 또는 탭하여 날기', gameOver: '게임 오버', retry: '스페이스 키를 누르거나 탭하여 다시 시도하세요.', score: '점수', best: '최고 점수', returnLogin: '로그인으로 돌아가기', gameLabel: 'Flappy Bird 게임. 스페이스 키를 누르거나 탭하여 새를 위로 날리세요.' },
+      fr: { password: 'Mot de passe', open: 'Ouvrir', wrong: 'Mot de passe incorrect. Réessayez.', gameHelp: 'Guidez le petit oiseau entre les tuyaux.', controls: '<span class="flappy-key">ESPACE</span> ou touchez pour voler', gameOver: 'Partie terminée', retry: 'Appuyez sur Espace ou touchez pour réessayer.', score: 'Score', best: 'Meilleur', returnLogin: 'Retour à la connexion', gameLabel: 'Jeu Flappy Bird. Appuyez sur Espace ou touchez pour faire monter l’oiseau.' }
     };
     const themeColors = [
       ['#f5dcdc', '#eccaca'], ['#f6e3cf', '#eed3b5'], ['#f5efc9', '#ece2ac'],
@@ -521,6 +522,14 @@
       const text = translations[code];
       document.documentElement.lang = code === 'zh' ? 'zh-CN' : code;
       document.title = text.title;
+      const interfaceText = interfaceTranslations[code];
+      const loginPassword = document.getElementById('passwordInput');
+      loginPassword.placeholder = interfaceText.password;
+      loginPassword.setAttribute('aria-label', interfaceText.password);
+      document.getElementById('unlockButton').textContent = interfaceText.open;
+      document.getElementById('flappyShell').setAttribute('aria-label', interfaceText.gameLabel);
+      document.getElementById('flappyExit').setAttribute('aria-label', interfaceText.returnLogin);
+      document.getElementById('flappyControls').innerHTML = interfaceText.controls;
       document.getElementById('pageTitle').textContent = text.title;
       document.getElementById('pageClose').setAttribute('aria-label', text.closeProfile);
       const settings = settingsTranslations[code];
@@ -597,6 +606,14 @@
       try { saved = JSON.parse(localStorage.getItem('profileData')); }
       catch (error) { saved = null; }
       if (!saved || !saved.fields) return { language: 'zh', theme: 9, background: 0 };
+
+      const savedName = String(saved.fields.nickname || '').replace(/\s+/g, '').toLowerCase();
+      const savedHometown = String(saved.fields.hometown || '').replace(/\s+/g, '').toLowerCase();
+      const savedOccupation = String(saved.fields.occupation || '').replace(/\s+/g, '').toLowerCase();
+      if (savedName === '林晓雨' || savedName === 'linxiaoyu') saved.fields.nickname = '';
+      if (savedHometown === '苏州' || savedHometown === 'suzhou') saved.fields.hometown = '';
+      if (savedOccupation === '学生' || savedOccupation === 'xuesheng' || savedOccupation === 'student') saved.fields.occupation = '';
+      try { localStorage.setItem('profileData', JSON.stringify(saved)); } catch (error) {}
 
       document.querySelectorAll('.row[data-field]').forEach(row => {
         const field = row.dataset.field;
@@ -767,7 +784,7 @@
         profilePage.hidden = false;
         window.scrollTo(0, 0);
       } else {
-        passwordError.textContent = '密码错误，请重试';
+        passwordError.textContent = interfaceTranslations[currentLanguage].wrong;
         passwordInput.select();
       }
     });
@@ -823,11 +840,12 @@
       flappyScore.textContent = '0'; flappyResult.textContent = '';
     }
     function openFlappyBird() {
+      const interfaceText = interfaceTranslations[currentLanguage];
       flappyView.hidden = false;
       document.body.style.overflow = 'hidden';
       fbState = 'ready';
       flappyMessageTitle.textContent = 'Flappy Bird';
-      flappyMessageText.textContent = 'Guide the little bird through the pipes.';
+      flappyMessageText.textContent = interfaceText.gameHelp;
       flappyMessage.hidden = false;
       resizeFlappy(); resetFlappy(); flappyCanvas.focus();
     }
@@ -848,11 +866,12 @@
     }
     function endFlappy() {
       if (fbState !== 'running') return;
+      const interfaceText = interfaceTranslations[currentLanguage];
       fbState = 'over'; fbBest = Math.max(fbBest, fbScoreValue);
       try { localStorage.setItem('skyHopperBest', fbBest); } catch (error) {}
-      flappyMessageTitle.textContent = 'Game Over';
-      flappyMessageText.textContent = 'Press Space or tap to try again.';
-      flappyResult.textContent = `Score: ${fbScoreValue}  ·  Best: ${fbBest}`;
+      flappyMessageTitle.textContent = interfaceText.gameOver;
+      flappyMessageText.textContent = interfaceText.retry;
+      flappyResult.textContent = `${interfaceText.score}: ${fbScoreValue}  ·  ${interfaceText.best}: ${fbBest}`;
       flappyMessage.hidden = false;
     }
     function updateFlappy(dt) {
