@@ -85,10 +85,12 @@
       background: transparent;
       text-align: right;
       color: #111;
+      caret-color: #111;
       outline: none;
     }
-    .text-input:hover { background: rgba(255,255,255,.45); }
-    .text-input:focus { border-color: #7d7d7d; background: #fff; }
+    .text-input::placeholder { color: #6f6f6f; opacity: 1; }
+    .text-input:hover,
+    .text-input:focus { border-color: transparent; background: transparent; box-shadow: none; }
 
     .overlay {
       position: fixed;
