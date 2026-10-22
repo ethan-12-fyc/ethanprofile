@@ -57,6 +57,7 @@
 
     .list { display: grid; gap: 10px; padding-top: 18px; }
     .row.settings-only { display: none; }
+    .row[hidden], .row[data-field="language"] { display: none !important; }
     .row {
       min-height: 58px;
       display: grid;
@@ -115,6 +116,20 @@
     .dialog h2 { margin: 0; font-size: 20px; font-weight: 500; }
     .dialog-close { border: 0; background: transparent; color: #666; font-size: 25px; cursor: pointer; }
     .choices { display: grid; gap: 9px; }
+    .location-search {
+      position: sticky;
+      top: -24px;
+      z-index: 1;
+      width: 100%;
+      margin-bottom: 3px;
+      padding: 13px 15px;
+      border: 1px solid #bdbdbd;
+      border-radius: 7px;
+      background: var(--page-color);
+      color: #111;
+      font: inherit;
+    }
+    .location-search:focus { border-color: #333; outline: 2px solid rgba(0,0,0,.12); }
     .choice {
       width: 100%;
       padding: 13px 15px;
@@ -332,6 +347,7 @@
       <h1>选择语言 · Choose a language</h1>
       <div class="language-buttons">
         <button class="language-choice" type="button" data-language-code="zh">中文</button>
+        <button class="language-choice" type="button" data-language-code="yue">廣東話</button>
         <button class="language-choice" type="button" data-language-code="en">English</button>
         <button class="language-choice" type="button" data-language-code="ja">日本語</button>
         <button class="language-choice" type="button" data-language-code="ko">한국어</button>
@@ -369,7 +385,7 @@
         <span class="label">生日</span>
         <input class="text-input" type="date" aria-label="生日">
       </label>
-      <button class="row select-row" type="button" data-field="location" data-selected="1">
+      <button class="row select-row" type="button" data-field="location" data-selected="-1" data-country="" data-state="">
         <span class="label">所在地</span><span class="value">上海</span><span class="arrow">›</span>
       </button>
       <label class="row" data-field="bio">
@@ -393,7 +409,7 @@
       <button class="row select-row" type="button" data-field="interests" data-selected="1">
         <span class="label">兴趣爱好</span><span class="value">摄影</span><span class="arrow">›</span>
       </button>
-      <button class="row select-row" type="button" data-field="language" data-selected="0">
+      <button class="row select-row" type="button" data-field="language" data-selected="0" hidden>
         <span class="label">常用语言</span><span class="value">中文</span><span class="arrow">›</span>
       </button>
       <label class="row" data-field="hometown">
@@ -442,11 +458,11 @@
         <button class="settings-item" type="button" data-open-field="background">
           <span id="settingsBackgroundLabel">背景颜色</span><span class="arrow">›</span>
         </button>
+        <button class="settings-item" type="button" data-open-field="language">
+          <span id="settingsLanguageLabel">常用语言</span><span class="arrow">›</span>
+        </button>
         <button class="settings-item" id="changePasswordOpen" type="button">
           <span id="settingsPasswordLabel">修改密码</span><span class="arrow">›</span>
-        </button>
-        <button class="settings-item" type="button" data-open-field="visibility">
-          <span id="settingsVisibilityLabel">资料可见范围</span><span class="arrow">›</span>
         </button>
       </div>
     </div>
@@ -475,7 +491,15 @@
         labels: ['昵称','性别','生日','所在地','个人简介','感情状态','职业','教育程度','学校','兴趣爱好','常用语言','家乡','星座','主题颜色','资料可见范围','背景颜色'],
         placeholders: { nickname: '请输入昵称', bio: '请输入个人简介', occupation: '请输入职业', school: '请输入学校名称', hometown: '请输入家乡' },
         options: {
-          gender: ['女','男','非二元','不愿透露'], location: ['北京','上海','广州','深圳','杭州','成都','其他'], relationship: ['单身','恋爱中','已婚','保密'], education: ['高中及以下','专科','本科','硕士','博士','其他'], interests: ['旅行','摄影','阅读','音乐','电影','运动','美食','游戏'], language: ['中文','English','日本語','한국어','Français'], theme: ['红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色'], zodiac: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座'], visibility: ['所有人','仅好友','仅自己'], background: ['白色','红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色']
+          gender: ['女','男','非二元','不愿透露'], location: ['北京','上海','广州','深圳','杭州','成都','其他'], relationship: ['单身','恋爱中','已婚','保密'], education: ['高中及以下','专科','本科','硕士','博士','其他'], interests: ['旅行','摄影','阅读','音乐','电影','运动','美食','游戏'], language: ['中文','廣東話','English','日本語','한국어','Français'], theme: ['红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色'], zodiac: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座'], visibility: ['所有人','仅好友','仅自己'], background: ['白色','红色','橙色','黄色','绿色','青色','蓝色','靛蓝色','紫色','粉色','灰色']
+        }
+      },
+      yue: {
+        title: '個人資料', closeProfile: '關閉個人資料', listLabel: '個人資料欄位', choose: '請選擇', closeOptions: '關閉選項', closed: '個人資料頁面已關閉', empty: '未填寫',
+        labels: ['暱稱','性別','生日','所在地','個人簡介','感情狀態','職業','教育程度','學校','興趣愛好','常用語言','家鄉','星座','主題顏色','資料可見範圍','背景顏色'],
+        placeholders: { nickname: '請輸入暱稱', bio: '請輸入個人簡介', occupation: '請輸入職業', school: '請輸入學校名稱', hometown: '請輸入家鄉' },
+        options: {
+          gender: ['女','男','非二元','唔想透露'], location: ['北京','上海','廣州','深圳','杭州','成都','其他'], relationship: ['單身','拍緊拖','已婚','保密'], education: ['高中或以下','專科','本科','碩士','博士','其他'], interests: ['旅行','攝影','閱讀','音樂','電影','運動','美食','遊戲'], language: ['中文','廣東話','English','日本語','한국어','Français'], theme: ['紅色','橙色','黃色','綠色','青色','藍色','靛藍色','紫色','粉色','灰色'], zodiac: ['白羊座','金牛座','雙子座','巨蟹座','獅子座','處女座','天秤座','天蠍座','射手座','摩羯座','水瓶座','雙魚座'], visibility: ['所有人','只限朋友','只限自己'], background: ['白色','紅色','橙色','黃色','綠色','青色','藍色','靛藍色','紫色','粉色','灰色']
         }
       },
       en: {
@@ -483,7 +507,7 @@
         labels: ['Name','Gender','Birthday','Location','Bio','Relationship','Occupation','Education','School','Interests','Language','Hometown','Zodiac sign','Theme color','Profile visibility','Background color'],
         placeholders: { nickname: 'Please enter your name', bio: 'Please enter your bio', occupation: 'Please enter your occupation', school: 'Please enter your school', hometown: 'Please enter your hometown' },
         options: {
-          gender: ['Woman','Man','Non-binary','Prefer not to say'], location: ['Beijing','Shanghai','Guangzhou','Shenzhen','Hangzhou','Chengdu','Other'], relationship: ['Single','In a relationship','Married','Private'], education: ['High school or below','Associate degree','Bachelor’s degree','Master’s degree','Doctorate','Other'], interests: ['Travel','Photography','Reading','Music','Movies','Sports','Food','Gaming'], language: ['中文','English','日本語','한국어','Français'], theme: ['Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray'], zodiac: ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'], visibility: ['Everyone','Friends only','Only me'], background: ['White','Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray']
+          gender: ['Woman','Man','Non-binary','Prefer not to say'], location: ['Beijing','Shanghai','Guangzhou','Shenzhen','Hangzhou','Chengdu','Other'], relationship: ['Single','In a relationship','Married','Private'], education: ['High school or below','Associate degree','Bachelor’s degree','Master’s degree','Doctorate','Other'], interests: ['Travel','Photography','Reading','Music','Movies','Sports','Food','Gaming'], language: ['中文','廣東話','English','日本語','한국어','Français'], theme: ['Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray'], zodiac: ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'], visibility: ['Everyone','Friends only','Only me'], background: ['White','Red','Orange','Yellow','Green','Cyan','Blue','Indigo','Violet','Pink','Gray']
         }
       },
       ja: {
@@ -491,7 +515,7 @@
         labels: ['ニックネーム','性別','誕生日','現在地','自己紹介','交際状況','職業','学歴','学校','趣味','使用言語','出身地','星座','テーマカラー','公開範囲','背景色'],
         placeholders: { nickname: 'ニックネームを入力してください', bio: '自己紹介を入力してください', occupation: '職業を入力してください', school: '学校名を入力してください', hometown: '出身地を入力してください' },
         options: {
-          gender: ['女性','男性','ノンバイナリー','回答しない'], location: ['北京','上海','広州','深圳','杭州','成都','その他'], relationship: ['独身','交際中','既婚','非公開'], education: ['高校以下','短期大学','大学','修士','博士','その他'], interests: ['旅行','写真','読書','音楽','映画','スポーツ','グルメ','ゲーム'], language: ['中文','English','日本語','한국어','Français'], theme: ['レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー'], zodiac: ['おひつじ座','おうし座','ふたご座','かに座','しし座','おとめ座','てんびん座','さそり座','いて座','やぎ座','みずがめ座','うお座'], visibility: ['全員','友達のみ','自分のみ'], background: ['ホワイト','レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー']
+          gender: ['女性','男性','ノンバイナリー','回答しない'], location: ['北京','上海','広州','深圳','杭州','成都','その他'], relationship: ['独身','交際中','既婚','非公開'], education: ['高校以下','短期大学','大学','修士','博士','その他'], interests: ['旅行','写真','読書','音楽','映画','スポーツ','グルメ','ゲーム'], language: ['中文','廣東話','English','日本語','한국어','Français'], theme: ['レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー'], zodiac: ['おひつじ座','おうし座','ふたご座','かに座','しし座','おとめ座','てんびん座','さそり座','いて座','やぎ座','みずがめ座','うお座'], visibility: ['全員','友達のみ','自分のみ'], background: ['ホワイト','レッド','オレンジ','イエロー','グリーン','シアン','ブルー','インディゴ','バイオレット','ピンク','グレー']
         }
       },
       ko: {
@@ -499,7 +523,7 @@
         labels: ['닉네임','성별','생일','현재 위치','소개','연애 상태','직업','학력','학교','관심사','사용 언어','고향','별자리','테마 색상','공개 범위','배경색'],
         placeholders: { nickname: '닉네임을 입력하세요', bio: '소개를 입력하세요', occupation: '직업을 입력하세요', school: '학교명을 입력하세요', hometown: '고향을 입력하세요' },
         options: {
-          gender: ['여성','남성','논바이너리','공개 안 함'], location: ['베이징','상하이','광저우','선전','항저우','청두','기타'], relationship: ['싱글','연애 중','기혼','비공개'], education: ['고등학교 이하','전문대','학사','석사','박사','기타'], interests: ['여행','사진','독서','음악','영화','스포츠','음식','게임'], language: ['中文','English','日本語','한국어','Français'], theme: ['빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색'], zodiac: ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'], visibility: ['모두','친구만','나만'], background: ['흰색','빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색']
+          gender: ['여성','남성','논바이너리','공개 안 함'], location: ['베이징','상하이','광저우','선전','항저우','청두','기타'], relationship: ['싱글','연애 중','기혼','비공개'], education: ['고등학교 이하','전문대','학사','석사','박사','기타'], interests: ['여행','사진','독서','음악','영화','스포츠','음식','게임'], language: ['中文','廣東話','English','日本語','한국어','Français'], theme: ['빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색'], zodiac: ['양자리','황소자리','쌍둥이자리','게자리','사자자리','처녀자리','천칭자리','전갈자리','사수자리','염소자리','물병자리','물고기자리'], visibility: ['모두','친구만','나만'], background: ['흰색','빨간색','주황색','노란색','초록색','청록색','파란색','남색','보라색','분홍색','회색']
         }
       },
       fr: {
@@ -507,20 +531,135 @@
         labels: ['Surnom','Genre','Date de naissance','Lieu','Présentation','Situation amoureuse','Profession','Études','École','Centres d’intérêt','Langue','Ville d’origine','Signe astrologique','Couleur du thème','Visibilité du profil','Couleur d’arrière-plan'],
         placeholders: { nickname: 'Saisissez votre surnom', bio: 'Saisissez votre présentation', occupation: 'Saisissez votre profession', school: 'Saisissez votre école', hometown: 'Saisissez votre ville d’origine' },
         options: {
-          gender: ['Femme','Homme','Non-binaire','Je préfère ne pas répondre'], location: ['Pékin','Shanghai','Canton','Shenzhen','Hangzhou','Chengdu','Autre'], relationship: ['Célibataire','En couple','Marié(e)','Privé'], education: ['Lycée ou inférieur','Bac +2','Licence','Master','Doctorat','Autre'], interests: ['Voyage','Photographie','Lecture','Musique','Cinéma','Sport','Cuisine','Jeux vidéo'], language: ['中文','English','日本語','한국어','Français'], theme: ['Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris'], zodiac: ['Bélier','Taureau','Gémeaux','Cancer','Lion','Vierge','Balance','Scorpion','Sagittaire','Capricorne','Verseau','Poissons'], visibility: ['Tout le monde','Amis uniquement','Moi uniquement'], background: ['Blanc','Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris']
+          gender: ['Femme','Homme','Non-binaire','Je préfère ne pas répondre'], location: ['Pékin','Shanghai','Canton','Shenzhen','Hangzhou','Chengdu','Autre'], relationship: ['Célibataire','En couple','Marié(e)','Privé'], education: ['Lycée ou inférieur','Bac +2','Licence','Master','Doctorat','Autre'], interests: ['Voyage','Photographie','Lecture','Musique','Cinéma','Sport','Cuisine','Jeux vidéo'], language: ['中文','廣東話','English','日本語','한국어','Français'], theme: ['Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris'], zodiac: ['Bélier','Taureau','Gémeaux','Cancer','Lion','Vierge','Balance','Scorpion','Sagittaire','Capricorne','Verseau','Poissons'], visibility: ['Tout le monde','Amis uniquement','Moi uniquement'], background: ['Blanc','Rouge','Orange','Jaune','Vert','Cyan','Bleu','Indigo','Violet','Rose','Gris']
         }
       }
     };
-    const languageCodes = ['zh', 'en', 'ja', 'ko', 'fr'];
+    const languageCodes = ['zh', 'yue', 'en', 'ja', 'ko', 'fr'];
+    const locationText = {
+      zh: { country: '选择国家', state: '选择州或省', search: '搜索…' }, yue: { country: '選擇國家', state: '選擇州或省', search: '搜尋…' },
+      en: { country: 'Choose a country', state: 'Choose a state or province', search: 'Search…' }, ja: { country: '国を選択', state: '州・都道府県を選択', search: '検索…' },
+      ko: { country: '국가 선택', state: '주 또는 도 선택', search: '검색…' }, fr: { country: 'Choisissez un pays', state: 'Choisissez un État ou une province', search: 'Rechercher…' }
+    };
+    let countryCities = {
+      'Afghanistan':['Kabul','Herat','Kandahar'], 'Albania':['Tirana','Durrës','Vlorë'], 'Algeria':['Algiers','Oran','Constantine'],
+      'Andorra':['Andorra la Vella','Escaldes-Engordany'], 'Angola':['Luanda','Huambo','Lobito'], 'Antigua and Barbuda':['St. John’s','All Saints'],
+      'Argentina':['Buenos Aires','Córdoba','Rosario'], 'Armenia':['Yerevan','Gyumri','Vanadzor'], 'Australia':['Canberra','Sydney','Melbourne','Brisbane'],
+      'Austria':['Vienna','Graz','Salzburg'], 'Azerbaijan':['Baku','Ganja','Sumqayit'], 'Bahamas':['Nassau','Freeport'],
+      'Bahrain':['Manama','Riffa','Muharraq'], 'Bangladesh':['Dhaka','Chattogram','Khulna'], 'Barbados':['Bridgetown','Speightstown'],
+      'Belarus':['Minsk','Gomel','Brest'], 'Belgium':['Brussels','Antwerp','Ghent'], 'Belize':['Belmopan','Belize City','San Ignacio'],
+      'Benin':['Porto-Novo','Cotonou','Parakou'], 'Bhutan':['Thimphu','Phuntsholing','Paro'], 'Bolivia':['Sucre','La Paz','Santa Cruz de la Sierra'],
+      'Bosnia and Herzegovina':['Sarajevo','Banja Luka','Mostar'], 'Botswana':['Gaborone','Francistown','Maun'], 'Brazil':['Brasília','São Paulo','Rio de Janeiro','Salvador'],
+      'Brunei':['Bandar Seri Begawan','Kuala Belait'], 'Bulgaria':['Sofia','Plovdiv','Varna'], 'Burkina Faso':['Ouagadougou','Bobo-Dioulasso'],
+      'Burundi':['Gitega','Bujumbura','Ngozi'], 'Cabo Verde':['Praia','Mindelo'], 'Cambodia':['Phnom Penh','Siem Reap','Battambang'],
+      'Cameroon':['Yaoundé','Douala','Garoua'], 'Canada':['Ottawa','Toronto','Vancouver','Montréal'], 'Central African Republic':['Bangui','Bimbo','Berbérati'],
+      'Chad':['N’Djamena','Moundou','Sarh'], 'Chile':['Santiago','Valparaíso','Concepción'], 'China':['Beijing','Shanghai','Guangzhou','Shenzhen','Chengdu','Hangzhou'],
+      'Colombia':['Bogotá','Medellín','Cali','Cartagena'], 'Comoros':['Moroni','Mutsamudu'], 'Congo, Democratic Republic of the':['Kinshasa','Lubumbashi','Goma'],
+      'Congo, Republic of the':['Brazzaville','Pointe-Noire'], 'Costa Rica':['San José','Limón','Alajuela'], 'Côte d’Ivoire':['Yamoussoukro','Abidjan','Bouaké'],
+      'Croatia':['Zagreb','Split','Rijeka'], 'Cuba':['Havana','Santiago de Cuba','Camagüey'], 'Cyprus':['Nicosia','Limassol','Larnaca'],
+      'Czechia':['Prague','Brno','Ostrava'], 'Denmark':['Copenhagen','Aarhus','Odense'], 'Djibouti':['Djibouti City','Ali Sabieh'],
+      'Dominica':['Roseau','Portsmouth'], 'Dominican Republic':['Santo Domingo','Santiago de los Caballeros','Punta Cana'], 'Ecuador':['Quito','Guayaquil','Cuenca'],
+      'Egypt':['Cairo','Alexandria','Giza'], 'El Salvador':['San Salvador','Santa Ana','San Miguel'], 'Equatorial Guinea':['Malabo','Bata'],
+      'Eritrea':['Asmara','Keren','Massawa'], 'Estonia':['Tallinn','Tartu','Narva'], 'Eswatini':['Mbabane','Manzini','Lobamba'],
+      'Ethiopia':['Addis Ababa','Dire Dawa','Gondar'], 'Fiji':['Suva','Nadi','Lautoka'], 'Finland':['Helsinki','Tampere','Turku'],
+      'France':['Paris','Marseille','Lyon','Toulouse'], 'Gabon':['Libreville','Port-Gentil'], 'Gambia':['Banjul','Serekunda'],
+      'Georgia':['Tbilisi','Batumi','Kutaisi'], 'Germany':['Berlin','Hamburg','Munich','Frankfurt'], 'Ghana':['Accra','Kumasi','Tamale'],
+      'Greece':['Athens','Thessaloniki','Patras'], 'Grenada':['St. George’s','Gouyave'], 'Guatemala':['Guatemala City','Quetzaltenango','Antigua Guatemala'],
+      'Guinea':['Conakry','Kankan','Nzérékoré'], 'Guinea-Bissau':['Bissau','Bafatá'], 'Guyana':['Georgetown','Linden','New Amsterdam'],
+      'Haiti':['Port-au-Prince','Cap-Haïtien','Jacmel'], 'Honduras':['Tegucigalpa','San Pedro Sula','La Ceiba'], 'Hungary':['Budapest','Debrecen','Szeged'],
+      'Iceland':['Reykjavík','Kópavogur','Akureyri'], 'India':['New Delhi','Mumbai','Bengaluru','Kolkata','Chennai','Hyderabad'], 'Indonesia':['Jakarta','Surabaya','Bandung','Medan'],
+      'Iran':['Tehran','Mashhad','Isfahan','Shiraz'], 'Iraq':['Baghdad','Basra','Erbil','Mosul'], 'Ireland':['Dublin','Cork','Galway'],
+      'Israel':['Jerusalem','Tel Aviv','Haifa'], 'Italy':['Rome','Milan','Naples','Florence'], 'Jamaica':['Kingston','Montego Bay','Spanish Town'],
+      'Japan':['Tokyo','Osaka','Kyoto','Yokohama','Sapporo'], 'Jordan':['Amman','Zarqa','Aqaba'], 'Kazakhstan':['Astana','Almaty','Shymkent'],
+      'Kenya':['Nairobi','Mombasa','Kisumu'], 'Kiribati':['South Tarawa','Betio'], 'Korea, North':['Pyongyang','Hamhung','Chongjin'],
+      'Korea, South':['Seoul','Busan','Incheon','Daegu'], 'Kuwait':['Kuwait City','Al Ahmadi','Hawalli'], 'Kyrgyzstan':['Bishkek','Osh','Jalal-Abad'],
+      'Laos':['Vientiane','Luang Prabang','Pakse'], 'Latvia':['Riga','Daugavpils','Liepāja'], 'Lebanon':['Beirut','Tripoli','Sidon'],
+      'Lesotho':['Maseru','Teyateyaneng'], 'Liberia':['Monrovia','Gbarnga','Buchanan'], 'Libya':['Tripoli','Benghazi','Misrata'],
+      'Liechtenstein':['Vaduz','Schaan'], 'Lithuania':['Vilnius','Kaunas','Klaipėda'], 'Luxembourg':['Luxembourg City','Esch-sur-Alzette'],
+      'Madagascar':['Antananarivo','Toamasina','Antsirabe'], 'Malawi':['Lilongwe','Blantyre','Mzuzu'], 'Malaysia':['Kuala Lumpur','George Town','Johor Bahru'],
+      'Maldives':['Malé','Addu City'], 'Mali':['Bamako','Sikasso','Mopti'], 'Malta':['Valletta','Birkirkara','Sliema'],
+      'Marshall Islands':['Majuro','Ebeye'], 'Mauritania':['Nouakchott','Nouadhibou'], 'Mauritius':['Port Louis','Beau Bassin-Rose Hill','Curepipe'],
+      'Mexico':['Mexico City','Guadalajara','Monterrey','Puebla'], 'Micronesia':['Palikir','Weno','Kolonia'], 'Moldova':['Chișinău','Bălți','Tiraspol'],
+      'Monaco':['Monaco','Monte Carlo'], 'Mongolia':['Ulaanbaatar','Erdenet','Darkhan'], 'Montenegro':['Podgorica','Nikšić','Budva'],
+      'Morocco':['Rabat','Casablanca','Marrakesh','Fez'], 'Mozambique':['Maputo','Matola','Beira'], 'Myanmar':['Naypyidaw','Yangon','Mandalay'],
+      'Namibia':['Windhoek','Walvis Bay','Swakopmund'], 'Nauru':['Yaren','Denigomodu'], 'Nepal':['Kathmandu','Pokhara','Lalitpur'],
+      'Netherlands':['Amsterdam','Rotterdam','The Hague','Utrecht'], 'New Zealand':['Wellington','Auckland','Christchurch'], 'Nicaragua':['Managua','León','Granada'],
+      'Niger':['Niamey','Zinder','Maradi'], 'Nigeria':['Abuja','Lagos','Kano','Ibadan'], 'North Macedonia':['Skopje','Bitola','Ohrid'],
+      'Norway':['Oslo','Bergen','Trondheim'], 'Oman':['Muscat','Salalah','Sohar'], 'Pakistan':['Islamabad','Karachi','Lahore','Peshawar'],
+      'Palau':['Ngerulmud','Koror'], 'Palestine':['Ramallah','Gaza City','Bethlehem'], 'Panama':['Panama City','Colón','David'],
+      'Papua New Guinea':['Port Moresby','Lae','Mount Hagen'], 'Paraguay':['Asunción','Ciudad del Este','Encarnación'], 'Peru':['Lima','Arequipa','Cusco'],
+      'Philippines':['Manila','Quezon City','Cebu City','Davao City'], 'Poland':['Warsaw','Kraków','Wrocław','Gdańsk'], 'Portugal':['Lisbon','Porto','Braga'],
+      'Qatar':['Doha','Al Rayyan','Al Wakrah'], 'Romania':['Bucharest','Cluj-Napoca','Timișoara'], 'Russia':['Moscow','Saint Petersburg','Novosibirsk','Kazan'],
+      'Rwanda':['Kigali','Huye','Musanze'], 'Saint Kitts and Nevis':['Basseterre','Charlestown'], 'Saint Lucia':['Castries','Vieux Fort'],
+      'Saint Vincent and the Grenadines':['Kingstown','Georgetown'], 'Samoa':['Apia','Vaitele'], 'San Marino':['San Marino','Serravalle'],
+      'São Tomé and Príncipe':['São Tomé','Santo António'], 'Saudi Arabia':['Riyadh','Jeddah','Mecca','Medina'], 'Senegal':['Dakar','Touba','Saint-Louis'],
+      'Serbia':['Belgrade','Novi Sad','Niš'], 'Seychelles':['Victoria','Anse Boileau'], 'Sierra Leone':['Freetown','Bo','Kenema'],
+      'Singapore':['Singapore'], 'Slovakia':['Bratislava','Košice','Žilina'], 'Slovenia':['Ljubljana','Maribor','Koper'],
+      'Solomon Islands':['Honiara','Gizo'], 'Somalia':['Mogadishu','Hargeisa','Kismayo'], 'South Africa':['Pretoria','Cape Town','Johannesburg','Durban'],
+      'South Sudan':['Juba','Wau','Malakal'], 'Spain':['Madrid','Barcelona','Valencia','Seville'], 'Sri Lanka':['Sri Jayawardenepura Kotte','Colombo','Kandy'],
+      'Sudan':['Khartoum','Omdurman','Port Sudan'], 'Suriname':['Paramaribo','Lelydorp'], 'Sweden':['Stockholm','Gothenburg','Malmö'],
+      'Switzerland':['Bern','Zürich','Geneva','Basel'], 'Syria':['Damascus','Aleppo','Homs'], 'Tajikistan':['Dushanbe','Khujand','Kulob'],
+      'Tanzania':['Dodoma','Dar es Salaam','Arusha'], 'Thailand':['Bangkok','Chiang Mai','Phuket'], 'Timor-Leste':['Dili','Baucau'],
+      'Togo':['Lomé','Sokodé','Kara'], 'Tonga':['Nukuʻalofa','Neiafu'], 'Trinidad and Tobago':['Port of Spain','San Fernando','Chaguanas'],
+      'Tunisia':['Tunis','Sfax','Sousse'], 'Türkiye':['Ankara','Istanbul','İzmir','Antalya'], 'Turkmenistan':['Ashgabat','Türkmenabat','Daşoguz'],
+      'Tuvalu':['Funafuti','Vaiaku'], 'Uganda':['Kampala','Entebbe','Jinja'], 'Ukraine':['Kyiv','Lviv','Odesa','Kharkiv'],
+      'United Arab Emirates':['Abu Dhabi','Dubai','Sharjah'], 'United Kingdom':['London','Manchester','Edinburgh','Birmingham'], 'United States':['Washington, D.C.','New York City','Los Angeles','Chicago','Houston'],
+      'Uruguay':['Montevideo','Salto','Punta del Este'], 'Uzbekistan':['Tashkent','Samarkand','Bukhara'], 'Vanuatu':['Port Vila','Luganville'],
+      'Vatican City':['Vatican City'], 'Venezuela':['Caracas','Maracaibo','Valencia'], 'Vietnam':['Hanoi','Ho Chi Minh City','Da Nang'],
+      'Yemen':['Sana’a','Aden','Taiz'], 'Zambia':['Lusaka','Kitwe','Ndola'], 'Zimbabwe':['Harare','Bulawayo','Mutare']
+    };
+    let countryStates = {};
+    let worldwideStatesLoaded = false;
+    let worldwideStatesPromise = null;
+    async function loadWorldwideStates() {
+      if (worldwideStatesLoaded) return countryStates;
+      if (worldwideStatesPromise) return worldwideStatesPromise;
+      worldwideStatesPromise = fetch('https://countriesnow.space/api/v0.1/countries/states')
+        .then(response => {
+          if (!response.ok) throw new Error('City catalog unavailable');
+          return response.json();
+        })
+        .then(result => {
+          if (result.error || !Array.isArray(result.data)) throw new Error('Invalid city catalog');
+          const complete = {};
+          result.data.forEach(entry => {
+            if (!entry.name || !Array.isArray(entry.states)) return;
+            if (/taiwan/i.test(entry.name)) return;
+            complete[entry.name] = [...new Set(entry.states
+              .map(state => {
+                const name = state.name || '';
+                if (/taiwan/i.test(name)) return null;
+                return entry.name === 'China' && name === 'Shaanxi' ? 'Shanxi' : name;
+              })
+              .filter(Boolean))]
+              .sort((a, b) => a.localeCompare(b, 'en'));
+          });
+          if (complete.China && !complete.China.includes('Taiwan')) {
+            complete.China.push('Taiwan');
+            complete.China.sort((a, b) => a.localeCompare(b, 'en'));
+          }
+          if (Object.keys(complete).length < 190) throw new Error('Incomplete state catalog');
+          countryStates = complete;
+          worldwideStatesLoaded = true;
+          return countryStates;
+        })
+        .catch(error => {
+          worldwideStatesPromise = null;
+          throw error;
+        });
+      return worldwideStatesPromise;
+    }
     const settingsTranslations = {
-      zh: ['设置', '主题颜色', '资料可见范围', '关闭设置', '修改密码', '背景颜色'],
-      en: ['Settings', 'Theme color', 'Profile visibility', 'Close settings', 'Change password', 'Background color'],
-      ja: ['設定', 'テーマカラー', '公開範囲', '設定を閉じる', 'パスワードを変更', '背景色'],
-      ko: ['설정', '테마 색상', '공개 범위', '설정 닫기', '비밀번호 변경', '배경색'],
-      fr: ['Paramètres', 'Couleur du thème', 'Visibilité du profil', 'Fermer les paramètres', 'Modifier le mot de passe', 'Couleur d’arrière-plan']
+      zh: ['设置', '主题颜色', '资料可见范围', '关闭设置', '修改密码', '背景颜色', '常用语言'],
+      yue: ['設定', '主題顏色', '資料可見範圍', '關閉設定', '修改密碼', '背景顏色', '常用語言'],
+      en: ['Settings', 'Theme color', 'Profile visibility', 'Close settings', 'Change password', 'Background color', 'Language'],
+      ja: ['設定', 'テーマカラー', '公開範囲', '設定を閉じる', 'パスワードを変更', '背景色', '使用言語'],
+      ko: ['설정', '테마 색상', '공개 범위', '설정 닫기', '비밀번호 변경', '배경색', '사용 언어'],
+      fr: ['Paramètres', 'Couleur du thème', 'Visibilité du profil', 'Fermer les paramètres', 'Modifier le mot de passe', 'Couleur d’arrière-plan', 'Langue']
     };
     const passwordTranslations = {
       zh: ['修改密码','原密码','新密码','再次输入新密码','保存密码','关闭修改密码','原密码不正确','两次输入的新密码不一致','密码已修改'],
+      yue: ['修改密碼','原本密碼','新密碼','再輸入新密碼','儲存密碼','關閉修改密碼','原本密碼唔啱','兩次輸入嘅新密碼唔一致','密碼已修改'],
       en: ['Change password','Current password','New password','Enter new password again','Save password','Close password change','Current password is incorrect','New passwords do not match','Password changed'],
       ja: ['パスワードを変更','現在のパスワード','新しいパスワード','新しいパスワードを再入力','パスワードを保存','パスワード変更を閉じる','現在のパスワードが正しくありません','新しいパスワードが一致しません','パスワードを変更しました'],
       ko: ['비밀번호 변경','현재 비밀번호','새 비밀번호','새 비밀번호 다시 입력','비밀번호 저장','비밀번호 변경 닫기','현재 비밀번호가 올바르지 않습니다','새 비밀번호가 일치하지 않습니다','비밀번호가 변경되었습니다'],
@@ -528,6 +667,7 @@
     };
     const interfaceTranslations = {
       zh: { password: '密码', open: '打开', wrong: '密码错误，请重试', gameHelp: '引导小鸟穿过水管。', controls: '<span class="flappy-key">空格键</span> 或轻触来飞行', gameOver: '游戏结束', retry: '按空格键或轻触重试。', score: '得分', best: '最高分', returnLogin: '返回登录', gameLabel: 'Flappy Bird 游戏。按空格键或轻触让小鸟向上飞。' },
+      yue: { password: '密碼', open: '開啟', wrong: '密碼唔啱，請再試。', gameHelp: '引導小鳥穿過水管。', controls: '<span class="flappy-key">空格鍵</span> 或輕觸嚟飛行', gameOver: '遊戲結束', retry: '按空格鍵或輕觸再試。', score: '得分', best: '最高分', returnLogin: '返回登入', gameLabel: 'Flappy Bird 遊戲。按空格鍵或輕觸令小鳥向上飛。' },
       en: { password: 'Password', open: 'Open', wrong: 'Incorrect password. Please try again.', gameHelp: 'Guide the little bird through the pipes.', controls: '<span class="flappy-key">SPACE</span> or tap to flap', gameOver: 'Game Over', retry: 'Press Space or tap to try again.', score: 'Score', best: 'Best', returnLogin: 'Return to login', gameLabel: 'Flappy Bird game. Press Space or tap to make the bird fly upward.' },
       ja: { password: 'パスワード', open: '開く', wrong: 'パスワードが違います。もう一度お試しください。', gameHelp: '小鳥をパイプの間に通してください。', controls: '<span class="flappy-key">スペース</span> またはタップで羽ばたく', gameOver: 'ゲームオーバー', retry: 'スペースキーまたはタップでもう一度。', score: 'スコア', best: 'ベスト', returnLogin: 'ログインに戻る', gameLabel: 'Flappy Bird。スペースキーまたはタップで小鳥を上昇させます。' },
       ko: { password: '비밀번호', open: '열기', wrong: '비밀번호가 올바르지 않습니다. 다시 시도하세요.', gameHelp: '작은 새가 파이프 사이를 지나가게 하세요.', controls: '<span class="flappy-key">스페이스</span> 또는 탭하여 날기', gameOver: '게임 오버', retry: '스페이스 키를 누르거나 탭하여 다시 시도하세요.', score: '점수', best: '최고 점수', returnLogin: '로그인으로 돌아가기', gameLabel: 'Flappy Bird 게임. 스페이스 키를 누르거나 탭하여 새를 위로 날리세요.' },
@@ -556,7 +696,7 @@
     function applyLanguage(code) {
       currentLanguage = code;
       const text = translations[code];
-      document.documentElement.lang = code === 'zh' ? 'zh-CN' : code;
+      document.documentElement.lang = code === 'zh' ? 'zh-CN' : code === 'yue' ? 'yue-Hant-HK' : code;
       document.title = text.title;
       const interfaceText = interfaceTranslations[code];
       const loginPassword = document.getElementById('passwordInput');
@@ -572,10 +712,10 @@
       settingsOpen.setAttribute('aria-label', settings[0]);
       document.getElementById('settingsTitle').textContent = settings[0];
       document.getElementById('settingsThemeLabel').textContent = settings[1];
-      document.getElementById('settingsVisibilityLabel').textContent = settings[2];
       settingsClose.setAttribute('aria-label', settings[3]);
       document.getElementById('settingsPasswordLabel').textContent = settings[4];
       document.getElementById('settingsBackgroundLabel').textContent = settings[5];
+      document.getElementById('settingsLanguageLabel').textContent = settings[6];
       const passwordText = passwordTranslations[code];
       document.getElementById('changePasswordTitle').textContent = passwordText[0];
       [['oldPassword',1],['newPassword',2],['confirmPassword',3]].forEach(([id, index]) => {
@@ -598,6 +738,12 @@
           if (text.placeholders[field]) input.placeholder = text.placeholders[field];
         }
         if (row.classList.contains('select-row')) {
+          if (field === 'location') {
+            const value = row.querySelector('.value');
+            value.textContent = row.dataset.state ? `${row.dataset.state}, ${row.dataset.country}` : text.empty;
+            value.classList.toggle('muted', !row.dataset.state);
+            return;
+          }
           const selected = Number(row.dataset.selected);
           const value = row.querySelector('.value');
           value.textContent = selected < 0 ? text.empty : text.options[field][selected];
@@ -630,7 +776,9 @@
       document.querySelectorAll('.row[data-field]').forEach(row => {
         const field = row.dataset.field;
         const input = row.querySelector('input');
-        fields[field] = input ? input.value : Number(row.dataset.selected);
+        fields[field] = input ? input.value : field === 'location'
+          ? { country: row.dataset.country || '', state: row.dataset.state || '' }
+          : Number(row.dataset.selected);
       });
       try {
         localStorage.setItem('profileData', JSON.stringify({ language: currentLanguage, fields }));
@@ -656,9 +804,14 @@
         if (!(field in saved.fields)) return;
         const input = row.querySelector('input');
         if (input) input.value = saved.fields[field];
-        else row.dataset.selected = saved.fields[field];
+        else if (field === 'location' && saved.fields[field] && typeof saved.fields[field] === 'object') {
+          const savedCountry = saved.fields[field].country || '';
+          row.dataset.country = /taiwan/i.test(savedCountry) ? 'China' : savedCountry;
+          row.dataset.state = /taiwan/i.test(savedCountry) ? 'Taiwan' : saved.fields[field].state || '';
+        } else if (field !== 'location') row.dataset.selected = saved.fields[field];
       });
       const language = translations[saved.language] ? saved.language : 'zh';
+      document.querySelector('.select-row[data-field="language"]').dataset.selected = languageCodes.indexOf(language);
       const theme = Number(saved.fields.theme);
       const background = Number(saved.fields.background);
       return { language, theme: themeColors[theme] ? theme : 9, background: backgroundColors[background] ? background : 0 };
@@ -669,6 +822,22 @@
       input.addEventListener('change', saveProfile);
     });
 
+    function addLocationSearch() {
+      const search = document.createElement('input');
+      search.type = 'search';
+      search.className = 'location-search';
+      search.placeholder = locationText[currentLanguage].search;
+      search.setAttribute('aria-label', locationText[currentLanguage].search);
+      search.addEventListener('input', () => {
+        const query = search.value.trim().toLocaleLowerCase();
+        choices.querySelectorAll('.choice').forEach(button => {
+          button.hidden = query !== '' && !button.textContent.toLocaleLowerCase().includes(query);
+        });
+      });
+      choices.appendChild(search);
+      return search;
+    }
+
     document.querySelectorAll('.select-row').forEach(row => {
       row.addEventListener('click', () => {
         activeRow = row;
@@ -677,6 +846,62 @@
         const current = Number(row.dataset.selected);
         dialogTitle.textContent = text.labels[[...document.querySelectorAll('.row[data-field]')].indexOf(row)];
         choices.replaceChildren();
+
+        if (field === 'location') {
+          const renderStates = country => {
+            dialogTitle.textContent = `${locationText[currentLanguage].state} · ${country}`;
+            choices.replaceChildren();
+            const search = addLocationSearch();
+            const states = countryStates[country];
+            if (!states.length) states.push(country);
+            states.forEach(state => {
+              const button = document.createElement('button');
+              button.type = 'button';
+              button.className = 'choice';
+              button.setAttribute('role', 'radio');
+              button.setAttribute('aria-checked', String(row.dataset.country === country && row.dataset.state === state));
+              button.textContent = state;
+              button.addEventListener('click', () => {
+                row.dataset.country = country;
+                row.dataset.state = state;
+                row.dataset.selected = '0';
+                const value = row.querySelector('.value');
+                value.textContent = `${state}, ${country}`;
+                value.classList.remove('muted');
+                closeDialog();
+                saveProfile();
+              });
+              choices.appendChild(button);
+            });
+            search.focus();
+          };
+          dialogTitle.textContent = locationText[currentLanguage].country;
+          overlay.hidden = false;
+          document.body.style.overflow = 'hidden';
+          const loading = document.createElement('button');
+          loading.type = 'button';
+          loading.className = 'choice';
+          loading.disabled = true;
+          loading.textContent = currentLanguage === 'zh' ? '正在载入州和省…' : currentLanguage === 'yue' ? '正在載入州同省…' : currentLanguage === 'ja' ? '州・都道府県を読み込み中…' : currentLanguage === 'ko' ? '주와 도 불러오는 중…' : currentLanguage === 'fr' ? 'Chargement des États et provinces…' : 'Loading states and provinces…';
+          choices.appendChild(loading);
+          loadWorldwideStates().then(catalog => {
+            if (activeRow !== row || overlay.hidden) return;
+            choices.replaceChildren();
+            const search = addLocationSearch();
+            Object.keys(catalog).sort((a, b) => a.localeCompare(b, 'en')).forEach(country => {
+              const button = document.createElement('button');
+              button.type = 'button';
+              button.className = 'choice';
+              button.textContent = country;
+              button.addEventListener('click', () => renderStates(country));
+              choices.appendChild(button);
+            });
+            search.focus();
+          }).catch(() => {
+            loading.textContent = currentLanguage === 'zh' ? '无法载入州和省，请检查网络连接。' : currentLanguage === 'yue' ? '載入唔到州同省，請檢查網絡。' : currentLanguage === 'ja' ? '読み込めません。ネット接続を確認してください。' : currentLanguage === 'ko' ? '불러올 수 없습니다. 인터넷 연결을 확인하세요.' : currentLanguage === 'fr' ? 'Chargement impossible. Vérifiez votre connexion.' : 'Could not load states. Check your internet connection.';
+          });
+          return;
+        }
 
         text.options[field].forEach((option, optionIndex) => {
           const button = document.createElement('button');
@@ -843,9 +1068,12 @@
     const languageScreen = document.getElementById('languageScreen');
     document.querySelectorAll('[data-language-code]').forEach(button => {
       button.addEventListener('click', () => {
-        applyLanguage(button.dataset.languageCode);
+        const selectedLanguage = button.dataset.languageCode;
+        document.querySelector('.select-row[data-field="language"]').dataset.selected = languageCodes.indexOf(selectedLanguage);
+        applyLanguage(selectedLanguage);
         saveProfile();
         languageScreen.hidden = true;
+        languageScreen.style.display = 'none';
         lockScreen.hidden = false;
         passwordInput.focus();
       });
@@ -957,8 +1185,13 @@
     function drawFlappyPipe(pipe) {
       const c = flappyCtx, groundTop = fbHeight - 82;
       const gradient = c.createLinearGradient(pipe.x,0,pipe.x+pipe.width,0);
-      gradient.addColorStop(0,'#60b83f'); gradient.addColorStop(.5,'#9be75e'); gradient.addColorStop(1,'#3f9133');
-      c.fillStyle = gradient; c.strokeStyle = '#286d2d'; c.lineWidth = 3;
+      const underground = fbScoreValue >= 15;
+      if (underground) {
+        gradient.addColorStop(0,'#7a4a2a'); gradient.addColorStop(.5,'#b8733e'); gradient.addColorStop(1,'#58351f');
+      } else {
+        gradient.addColorStop(0,'#60b83f'); gradient.addColorStop(.5,'#9be75e'); gradient.addColorStop(1,'#3f9133');
+      }
+      c.fillStyle = gradient; c.strokeStyle = underground ? '#3d2618' : '#286d2d'; c.lineWidth = 3;
       c.fillRect(pipe.x,0,pipe.width,pipe.gapY-22); c.strokeRect(pipe.x,-2,pipe.width,pipe.gapY-20);
       fbRoundedRect(pipe.x-7,pipe.gapY-28,pipe.width+14,28,4,gradient); c.strokeRect(pipe.x-7,pipe.gapY-28,pipe.width+14,28);
       const lowerY = pipe.gapY + pipe.gap;
@@ -966,14 +1199,45 @@
       c.fillStyle = gradient; c.fillRect(pipe.x,lowerY+28,pipe.width,groundTop-lowerY-28); c.strokeRect(pipe.x,lowerY+27,pipe.width,groundTop-lowerY-25);
     }
     function drawFlappy() {
-      const c = flappyCtx, sky = c.createLinearGradient(0,0,0,fbHeight);
-      sky.addColorStop(0,'#72d3f3'); sky.addColorStop(1,'#c8f3fb'); c.fillStyle = sky; c.fillRect(0,0,fbWidth,fbHeight);
-      drawFlappyCloud(fbWidth*.08,fbHeight*.2,70); drawFlappyCloud(fbWidth*.68,fbHeight*.31,88);
-      c.fillStyle = '#9ad66c'; c.beginPath(); c.moveTo(0,fbHeight-105);
-      for (let x=0; x<=fbWidth+50; x+=50) c.quadraticCurveTo(x+25,fbHeight-145,x+50,fbHeight-105);
-      c.lineTo(fbWidth,fbHeight); c.lineTo(0,fbHeight); c.fill(); fbPipes.forEach(drawFlappyPipe);
-      c.fillStyle='#d9b864'; c.fillRect(0,fbHeight-82,fbWidth,82); c.fillStyle='#83c950'; c.fillRect(0,fbHeight-82,fbWidth,17);
-      c.fillStyle='#e9d58e'; for(let x=-fbGroundOffset;x<fbWidth;x+=38)c.fillRect(x,fbHeight-57,21,7); drawFlappyBird();
+      const c = flappyCtx, underground = fbScoreValue >= 15;
+      if (underground) {
+        const soil = c.createLinearGradient(0,0,0,fbHeight);
+        soil.addColorStop(0,'#6b442b'); soil.addColorStop(.45,'#9a6742'); soil.addColorStop(1,'#4a2f20');
+        c.fillStyle=soil; c.fillRect(0,0,fbWidth,fbHeight);
+        c.fillStyle='rgba(55,31,19,.34)';
+        for(let x=18;x<fbWidth;x+=58){
+          const y=70+((x*47)%Math.max(120,fbHeight-190));
+          c.beginPath(); c.ellipse(x,y,7+(x%9),5+(x%6),x*.02,0,Math.PI*2); c.fill();
+        }
+        c.strokeStyle='rgba(48,75,30,.7)'; c.lineWidth=4;
+        for(let x=35;x<fbWidth;x+=105){c.beginPath();c.moveTo(x,0);c.quadraticCurveTo(x+18,38,x-4,78);c.stroke();}
+        c.fillStyle='#382419'; c.fillRect(0,0,fbWidth,20);
+      } else {
+        const sky = c.createLinearGradient(0,0,0,fbHeight);
+        sky.addColorStop(0,'#72d3f3'); sky.addColorStop(1,'#c8f3fb'); c.fillStyle=sky; c.fillRect(0,0,fbWidth,fbHeight);
+        drawFlappyCloud(fbWidth*.08,fbHeight*.2,70); drawFlappyCloud(fbWidth*.68,fbHeight*.31,88);
+        c.fillStyle='#9ad66c'; c.beginPath(); c.moveTo(0,fbHeight-105);
+        for(let x=0;x<=fbWidth+50;x+=50)c.quadraticCurveTo(x+25,fbHeight-145,x+50,fbHeight-105);
+        c.lineTo(fbWidth,fbHeight); c.lineTo(0,fbHeight); c.fill();
+      }
+      fbPipes.forEach(drawFlappyPipe);
+      if(underground){
+        const rockTop=fbHeight-82;
+        c.fillStyle='#3f291d'; c.fillRect(0,rockTop+10,fbWidth,72);
+        for(let i=-2,x=-fbGroundOffset-36;x<fbWidth+36;i++,x+=30){
+          const radius=12+(Math.abs(i)%4)*3;
+          c.fillStyle=i%2===0?'#705039':'#5a3e2d';
+          c.beginPath(); c.arc(x,rockTop+radius,radius,Math.PI,Math.PI*2); c.fill();
+          c.fillRect(x-radius,rockTop+radius-1,radius*2,83-radius);
+          c.fillStyle='rgba(255,255,255,.12)';
+          c.beginPath(); c.arc(x-4,rockTop+radius-3,Math.max(2,radius*.22),0,Math.PI*2); c.fill();
+        }
+      }else{
+        c.fillStyle='#d9b864'; c.fillRect(0,fbHeight-82,fbWidth,82);
+        c.fillStyle='#83c950'; c.fillRect(0,fbHeight-82,fbWidth,17);
+        c.fillStyle='#e9d58e'; for(let x=-fbGroundOffset;x<fbWidth;x+=38)c.fillRect(x,fbHeight-57,21,7);
+      }
+      drawFlappyBird();
     }
     function flappyLoop(time) {
       const dt = Math.min((time-fbLastTime)/1000 || 0,.034); fbLastTime=time;
